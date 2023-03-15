@@ -3,29 +3,37 @@ import axios from 'axios';
 
 export const postLogin = createAsyncThunk(
     'auth/postLogin',
-    async ({ email, password }: { email: string, password: string }) => {
-        const response = await axios.post(process.env.REACT_APP_API_ENDPOINT + `/users/login`, { email: "frat@test.com", password: "testtest" })
-        console.log(response)
-        return response.data
+    async ({ email, password }: { email: string, password: string }, {rejectWithValue}) => {
+        try {
+            const response = await axios.post(import.meta.env.VITE_API_ENDPOINT + `/users/login`, { email, password })
+            return response.data
+        } catch (error: any) {
+            console.log(error.response.data.error)
+            return rejectWithValue(error.response.data.error)            
+        }
     }
 )
 
 export interface AuthState {
-    email: string;
-    password: string;
+    status: "fulfilled" | "rejected" | "pending" | "",
     name: string;
+    username: string;
     avatar: string;
-    created?: Date;
-    updated?: Date;
+    error: {
+        email: string
+        password: string
+    };
 }
 
 const initialState: AuthState = {
-    email: "",
-    password: "",
+    status: "",
     name: "",
+    username: "",
     avatar: "",
-    created: undefined,
-    updated: undefined,
+    error: {
+        email: "",
+        password: "",
+    },
 }
 
 export const authSlice = createSlice({
@@ -35,7 +43,15 @@ export const authSlice = createSlice({
     //TODO: create new store to receive html document
     extraReducers(builder) {
       builder.addCase(postLogin.fulfilled, (state, action) => {
-        state = action.payload
+        state.status = "fulfilled"
+        state.name = action.payload.name
+        state.username = action.payload.username
+        state.avatar = action.payload.avatar
+        state.error = {email: "", password: ""}
+      })
+      builder.addCase(postLogin.rejected, (state, action) => {
+        state.status = "rejected"
+        state.error = action.payload as {email: string, password: string}
       })
     },
   })
