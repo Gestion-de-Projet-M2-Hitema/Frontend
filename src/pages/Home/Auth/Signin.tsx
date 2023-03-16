@@ -15,7 +15,7 @@ const Signin = () => {
         let res = await dispatch(postLogin({email, password}))
         if(res.type === "auth/postLogin/fulfilled") return navigate("/home");
     }
-    
+
     return (
         <div className="auth">
             <div className="block">
@@ -26,15 +26,15 @@ const Signin = () => {
                     <label htmlFor="email">Email</label>
                     <input type="text" name="email" value={email} onChange={(e) => setEmail(e.target.value)} />
 
-                    {userInfo.status && userInfo.error.email && 
-                        <div className="error">{userInfo.error.email}</div>
+                    {userInfo.status && userInfo.error?.email && 
+                        <div className="error">{userInfo.error?.email}</div>
                     }
 
                     <label htmlFor="password">Password</label>
-                    <input type="text" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
 
-                    {userInfo.status && userInfo.error.password && 
-                        <div className="error">{userInfo.error.password}</div>
+                    {userInfo.status && userInfo.error?.password && 
+                        <div className="error">{userInfo.error?.password}</div>
                     }
                 
                     <button className="submitButton" onClick={handleLogin}>Sign in</button>
