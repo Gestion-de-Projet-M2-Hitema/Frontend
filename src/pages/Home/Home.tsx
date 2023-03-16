@@ -1,11 +1,9 @@
-import "./style.scss"
-
-
 const Home = () => {
 
     return (
-        <div className="Home">
-            <h1>AAAAAAAAAAA</h1>
+        <div className="home">
+            <h1>Concorde</h1>
+            <p>Une application de chat pour entreprise.</p>
         </div>
     )
 }

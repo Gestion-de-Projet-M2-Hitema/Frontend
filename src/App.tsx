@@ -7,17 +7,20 @@ import { store } from './stores/store';
 const App = () => {
 
   return (
-    <div className="App">
-      <Provider store={store}>
-        <Router>
-          <Routes>
-            <Route path='*' element={<Home />} />
-            <Route path='/' element={<Home />} />
-            <Route path='/home' element={<Home />} />
-            <Route path='/auth' element={<Auth />} />
-          </Routes>
-        </Router>
-      </Provider>
+    <div className="app" id={theme}>
+       <ThemeContext.Provider value={{theme: theme, changeTheme: changeTheme}}>
+        <Provider store={store}>
+          <Router>
+            <Navbar/>
+            <Routes>
+              <Route path='*' element={<Home />} />
+              <Route path='/home' element={<Home />} />
+              <Route path='/signin' element={<Signin />} />
+              <Route path='/signup' element={<Signup />} />
+            </Routes>
+          </Router>
+        </Provider>
+      </ThemeContext.Provider>
     </div>
   )
 }
