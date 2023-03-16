@@ -5,10 +5,9 @@ export const postLogin = createAsyncThunk(
     'auth/postLogin',
     async ({ email, password }: { email: string, password: string }, {rejectWithValue}) => {
         try {
-            const response = await axios.post(import.meta.env.VITE_API_ENDPOINT + `/users/login`, { email, password })
+            const response = await axios.post(import.meta.env.VITE_API_ENDPOINT + `/users/login`, { email, password }, { withCredentials: true })
             return response.data
         } catch (error: any) {
-            console.log(error.response.data.error)
             return rejectWithValue(error.response.data.error)            
         }
     }

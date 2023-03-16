@@ -1,14 +1,18 @@
 import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Auth from './pages/Home/Auth/Auth';
 import { ThemeContext } from './context/theme.context';
 import { Provider } from "react-redux";
 import { store } from './stores/store';
 
+import Navbar from "./components/Navbar";
 import Home from './pages/Home/Home';
+import Signin from "./pages/Home/Auth/Signin";
+import Signup from "./pages/Home/Auth/Signup";
 import "./style.scss"
+
 const App = () => {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
   const changeTheme = () => {
     if(theme === "light"){
       setTheme("dark")
