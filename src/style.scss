@@ -1,0 +1,219 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');
+// @import url("https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap");
+// @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap%27");
+
+$navbar_height: 60px;
+
+body{
+	margin: 0;
+
+	--signin_submit_btn_color: white;
+	--signin_submit_btn_bg_color: #4f772d;
+	--signin_submit_btn_bg_color_hover: #5e8a37;
+	--auth_error_color: #d62828;
+}
+
+#light {
+	--main_text_color : black;
+	--main_bg_color: #ffffff;
+	--color_h1: #000;
+	--nevbar_link_color: #000;
+	--auth_form_border_color: grey;
+	--auth_form_box_shadow_color : rgba(0, 0, 0, 0.1);
+	--auth_label_color : grey;
+}
+
+#dark {
+	--main_text_color : white;
+	--main_bg_color: #212529;
+	--color_h1: #ffffff;
+	--nevbar_link_color: #ffffff;
+	--auth_form_border_color: #3a3f45;
+	--auth_form_box_shadow_color : none;
+	--auth_label_color : rgb(216, 204, 204);
+}
+
+.app {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+
+	font-family: "Roboto", sans-serif !important;
+	color: var(--main_text_color);
+
+	background-color: var(--main_bg_color);
+	transition-property: background-color, color;
+	transition-duration: 0.2s;
+
+	h1 {
+		color: var(--color_h1);
+	}
+}
+
+.navbar {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 14pt;
+
+	margin: 0px 40px;
+	
+	height: $navbar_height;
+
+	div {
+		height: $navbar_height;
+		display: flex;
+		flex-direction: row;
+		align-items: last baseline;
+	}
+
+	button {
+		border: none;
+		height: $navbar_height;
+		text-decoration: none;
+		background-color: var(--main_bg_color);
+		font-size: 14pt;
+		color: var(--nevbar_link_color);
+	}
+
+	button:hover {
+		text-decoration: underline;
+	}
+
+	a {
+		color: var(--nevbar_link_color);
+		text-decoration: none;
+		height: $navbar_height;
+		line-height: $navbar_height;
+		padding: 0px 10px
+	}
+
+	a:hover {
+		text-decoration: underline;
+	}
+
+	.active:not(:first-child) {
+		text-decoration: overline;	
+	}
+
+	.active:hover:not(:first-child) {
+		text-decoration: overline underline;	
+	}
+}
+
+.home {
+	height: 80%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	h1 {
+		margin: 0;
+		font-size: 30pt;
+	}
+	p {
+		font-size: 18pt;
+	}
+}
+
+.auth {
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+
+	.block {
+		height: 80vh;
+		margin: 5vh auto 0 auto;
+
+		h1 {
+			font-size: 22pt;
+			font-weight: normal;
+			text-align: center;
+		}
+	
+		.form {
+			width: 400px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-evenly;
+
+			margin-top: 40px;
+			padding: 30px;
+
+			border: 1px solid var(--auth_form_border_color);
+			border-radius: 10px;
+			box-shadow: 5px 5px 17px 2px var(--auth_form_box_shadow_color);
+
+			
+			label {
+				font-size: 12pt;
+				// padding-left: 2px;
+				color: var(--auth_label_color)
+			}
+			label:not(:first-child) {
+				margin-top: 30px;
+			}
+
+			input {
+				border: none;
+				border-bottom: 1px solid var(--main_text_color);
+				background-color: var(--main_bg_color);
+				line-height: 40px;
+				color: var(--main_text_color);
+				font-size: 12pt;
+
+				transition-property: none;
+			}
+			input:focus { 
+				outline: none;
+			}
+
+			.submitButton{
+				margin: 50px 15px 0px 30px;
+				padding: 10px 0px;
+				border: none;
+				border-radius: 2px;
+				background-color: var(--signin_submit_btn_bg_color);
+				color: var(--signin_submit_btn_color);
+
+				font-size: 12pt;
+			}
+
+			.submitButton:hover{
+				background-color: var(--signin_submit_btn_bg_color_hover);
+			}
+
+			p {
+				font-size: 10pt;
+				margin: 0;
+				text-align: center;
+
+				a {
+					text-decoration: none;
+					color: inherit;
+				}
+
+				a:hover {
+					text-decoration: underline;
+				}
+			}
+		}
+
+		.error, .error-global{
+			margin-top: 2px;
+			text-align: end;
+			font-size: 11pt;
+			color: var(--auth_error_color);
+			padding-right: 4px;
+		}
+
+		.error-global {
+			text-align: center;
+		}
+	}
+
+}
