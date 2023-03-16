@@ -6,8 +6,8 @@ import { store } from './stores/store';
 
 import Navbar from "./components/Navbar";
 import Home from './pages/Home/Home';
-import Signin from "./pages/Home/Auth/Signin";
-import Signup from "./pages/Home/Auth/Signup";
+import Signin from "./pages/Auth/Signin";
+import Signup from "./pages/Auth/Signup";
 import "./style.scss"
 
 const App = () => {

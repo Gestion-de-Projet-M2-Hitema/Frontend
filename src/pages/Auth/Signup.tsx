@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from "../../../stores/store";
-import { postSignup } from "../../../stores/signupStore";
+import { AppDispatch, RootState } from "../../stores/store";
+import { postSignup } from "../../stores/signupStore";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const Signup = () => {

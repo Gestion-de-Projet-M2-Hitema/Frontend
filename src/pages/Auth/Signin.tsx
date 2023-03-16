@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react"
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
-import { postLogin } from "../../../stores/authStore";
-import { AppDispatch, RootState } from "../../../stores/store";
+import { postLogin } from "../../stores/authStore";
+import { AppDispatch, RootState } from "../../stores/store";
 
 const Signin = () => {
     const navigate = useNavigate();
