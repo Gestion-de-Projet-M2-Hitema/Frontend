@@ -38,7 +38,11 @@ const initialState: SignupState = {
 export const signupSlice = createSlice({
     name: 'signup',
     initialState,
-    reducers: {},
+    reducers: {
+      resetSignupStatus: (state) => {
+        state.status = ""
+      }
+    },
     extraReducers(builder) {
       builder.addCase(postSignup.fulfilled, (state, action) => {
         state.status = "fulfilled"
@@ -51,4 +55,7 @@ export const signupSlice = createSlice({
     },
   })
 
+  export const {
+    resetSignupStatus
+  } = signupSlice.actions
   export default signupSlice.reducer

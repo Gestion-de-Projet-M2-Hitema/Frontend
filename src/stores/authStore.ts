@@ -38,7 +38,11 @@ const initialState: AuthState = {
 export const authSlice = createSlice({
     name: 'auth',
     initialState,
-    reducers: {},
+    reducers: {
+        resetSigninStatus: (state) => {
+            state.status = ""
+        }
+    },
     //TODO: create new store to receive html document
     extraReducers(builder) {
       builder.addCase(postLogin.fulfilled, (state, action) => {
@@ -55,4 +59,7 @@ export const authSlice = createSlice({
     },
   })
 
+  export const {
+    resetSigninStatus
+  } = authSlice.actions
   export default authSlice.reducer

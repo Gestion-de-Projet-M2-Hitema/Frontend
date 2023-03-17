@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from "../../stores/store";
-import { postSignup } from "../../stores/signupStore";
+import { postSignup, resetSignupStatus } from "../../stores/signupStore";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const Signup = () => {
@@ -19,8 +19,11 @@ const Signup = () => {
 	}
 
 	useEffect(() => {
-		status === "fulfilled" && navigate("/signin")
-	}, [status])
+        if (status === "fulfilled") {
+            navigate("/signin")
+            dispatch(resetSignupStatus())
+        }
+    }, [status])
 
     return (
 		<div className="auth">
