@@ -13,6 +13,11 @@ body{
 	--auth_error_color: #d62828;
 }
 
+#root {
+	width: 100vw;
+	height: 100vh;
+}
+
 #light {
 	--main_text_color : black;
 	--main_bg_color: #ffffff;
@@ -34,8 +39,8 @@ body{
 }
 
 .app {
-	width: 100vw;
-	height: 100vh;
+	width: 100%;
+	height: 100%;
 	display: flex;
 	flex-direction: column;
 
