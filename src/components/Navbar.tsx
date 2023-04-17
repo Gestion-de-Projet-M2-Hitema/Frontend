@@ -4,6 +4,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from "../stores/store";
 import { logout } from "../stores/authStore";
+import Cookies from 'js-cookie'
+
 
 
 const Navbar = () => {
@@ -14,6 +16,7 @@ const Navbar = () => {
 
 	const handleLogout = () => {
 		dispatch(logout())
+		Cookies.remove("jwt")
 		navigate("/home")
 	}
 
