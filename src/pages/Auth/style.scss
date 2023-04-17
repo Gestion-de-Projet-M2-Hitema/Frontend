@@ -1,0 +1,98 @@
+.auth {
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+
+	.block {
+		height: 80vh;
+		margin: 5vh auto 0 auto;
+
+		h1 {
+			font-size: 22pt;
+			font-weight: normal;
+			text-align: center;
+		}
+	
+		.form {
+			width: 400px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-evenly;
+
+			margin-top: 40px;
+			padding: 30px;
+
+			border: 1px solid var(--auth_form_border_color);
+			border-radius: 10px;
+			box-shadow: 5px 5px 17px 2px var(--auth_form_box_shadow_color);
+
+			
+			label {
+				font-size: 12pt;
+				// padding-left: 2px;
+				color: var(--auth_label_color)
+			}
+			label:not(:first-child) {
+				margin-top: 30px;
+			}
+
+			input {
+				border: none;
+				border-bottom: 1px solid var(--main_text_color);
+				background-color: var(--main_bg_color);
+				line-height: 40px;
+				color: var(--main_text_color);
+				font-size: 12pt;
+
+				transition-property: none;
+			}
+			input:focus { 
+				outline: none;
+			}
+
+			.submitButton{
+				margin: 50px 15px 0px 30px;
+				padding: 10px 0px;
+				border: none;
+				border-radius: 2px;
+				background-color: var(--signin_submit_btn_bg_color);
+				color: var(--signin_submit_btn_color);
+
+				font-size: 12pt;
+			}
+
+			.submitButton:hover{
+				background-color: var(--signin_submit_btn_bg_color_hover);
+			}
+
+			p {
+				font-size: 10pt;
+				margin: 0;
+				text-align: center;
+
+				a {
+					text-decoration: none;
+					color: inherit;
+				}
+
+				a:hover {
+					text-decoration: underline;
+				}
+			}
+		}
+
+		.error, .error-global{
+			margin-top: 2px;
+			text-align: end;
+			font-size: 11pt;
+			color: var(--auth_error_color);
+			padding-right: 4px;
+		}
+
+		.error-global {
+			text-align: center;
+		}
+	}
+
+}

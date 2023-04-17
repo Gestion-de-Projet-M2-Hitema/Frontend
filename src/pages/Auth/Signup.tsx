@@ -4,6 +4,8 @@ import { AppDispatch, RootState } from "../../stores/store";
 import { postSignup, resetSignupStatus } from "../../stores/signupStore";
 import { NavLink, useNavigate } from "react-router-dom";
 
+import './style.scss'
+
 const Signup = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch<AppDispatch>();

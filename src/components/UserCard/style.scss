@@ -1,0 +1,46 @@
+.userCard {
+	height: 60px;
+	width: 250px;
+
+	// background-color: red;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	// align-items: center;
+
+	.left {
+		display: flex;
+		flex-direction: row;
+	}
+
+	#profilePicture {
+		border-radius: 50px;
+		height: 50px;
+		width: 50px;
+		margin: 0px 5px;
+		align-self: center;
+	}
+
+	h1 {
+		font-size: 14pt;
+		font-weight: normal;
+		margin-left: 10px;
+		margin-top: 10px;
+	}
+
+	svg {
+		height: 25px;
+		width: 25px;
+		padding: 5px;
+		color: var(--usercard_setting_color);
+		align-self: center;
+		border-radius: 5px;
+	}
+
+	svg:hover {
+		color: var(--main_text_color);
+		background-color: var(--usercard_setting_bg_color);
+		cursor: pointer;
+	}
+}

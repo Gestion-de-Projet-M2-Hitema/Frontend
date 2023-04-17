@@ -1,0 +1,53 @@
+$navbar_height: 60px;
+
+.navbar {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 14pt;
+
+	margin: 0px 40px;
+	
+	height: $navbar_height;
+
+	div {
+		height: $navbar_height;
+		display: flex;
+		flex-direction: row;
+		align-items: last baseline;
+	}
+
+	button {
+		border: none;
+		height: $navbar_height;
+		text-decoration: none;
+		background-color: var(--main_bg_color);
+		font-size: 14pt;
+		color: var(--nevbar_link_color);
+	}
+
+	button:hover {
+		text-decoration: underline;
+	}
+
+	a {
+		color: var(--nevbar_link_color);
+		text-decoration: none;
+		height: $navbar_height;
+		line-height: $navbar_height;
+		padding: 0px 10px
+	}
+
+	a:hover {
+		text-decoration: underline;
+	}
+
+	.active:not(:first-child) {
+		text-decoration: overline;	
+	}
+
+	.active:hover:not(:first-child) {
+		text-decoration: overline underline;	
+	}
+}

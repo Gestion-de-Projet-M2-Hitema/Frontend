@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { postLogin, resetSigninStatus } from "../../stores/authStore";
 import { AppDispatch, RootState } from "../../stores/store";
 
+import './style.scss'
+
 const Signin = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
@@ -17,7 +19,7 @@ const Signin = () => {
 
     useEffect(() => {
         if (status === "fulfilled") {
-            navigate("/home")
+            navigate("/dashboard")
             dispatch(resetSigninStatus())
         }
     }, [status])
