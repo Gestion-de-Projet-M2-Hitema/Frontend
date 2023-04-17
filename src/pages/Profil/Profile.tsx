@@ -18,9 +18,9 @@ const Profile = () => {
         <div className="Profile">
             {/* {avatar}, {name}, {username}, {email}, {created}, {status} */}
             <div className="profile-block">
-                <div className="profile-block-avatar">
+                {avatar && <div className="profile-block-avatar">
                     <img src={avatar} alt={`${name}'s avatar`} />
-                </div>
+                </div>}
                 <div className="profile-block-content">
                     <div className="profile-block-content-header">Profile</div>
                     <div className="profile-block-content-created">Account created the {created && new Date(created).toLocaleDateString()}</div>
