@@ -4,11 +4,11 @@ import { ThemeContext } from './context/theme.context';
 import { Provider } from "react-redux";
 import { store } from './stores/store';
 
-import Navbar from "./components/Navbar";
+import Navbar from "./components/NavBar/Navbar";
 import Home from './pages/Home/Home';
 import Signin from "./pages/Auth/Signin";
 import Signup from "./pages/Auth/Signup";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/Dashboard/Dashboard";
 
 import "./style.scss"
 
