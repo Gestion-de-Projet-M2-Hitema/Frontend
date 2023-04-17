@@ -17,7 +17,7 @@ const Signin = () => {
 
     useEffect(() => {
         if (status === "fulfilled") {
-            navigate("/home")
+            navigate("/dashboard")
             dispatch(resetSigninStatus())
         }
     }, [status])

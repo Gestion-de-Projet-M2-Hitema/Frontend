@@ -41,6 +41,13 @@ export const authSlice = createSlice({
     reducers: {
         resetSigninStatus: (state) => {
             state.status = ""
+        },
+        logout: (state) => {
+            state.status = ""
+            state.name = ""
+            state.username = ""
+            state.avatar = ""
+                
         }
     },
     //TODO: create new store to receive html document
@@ -60,6 +67,8 @@ export const authSlice = createSlice({
   })
 
   export const {
-    resetSigninStatus
+    resetSigninStatus,
+    logout
   } = authSlice.actions
+
   export default authSlice.reducer

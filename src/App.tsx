@@ -8,6 +8,8 @@ import Navbar from "./components/Navbar";
 import Home from './pages/Home/Home';
 import Signin from "./pages/Auth/Signin";
 import Signup from "./pages/Auth/Signup";
+import Dashboard from "./pages/Dashboard";
+
 import "./style.scss"
 
 const App = () => {
@@ -35,6 +37,7 @@ const App = () => {
               <Route path='/home' element={<Home />} />
               <Route path='/signin' element={<Signin />} />
               <Route path='/signup' element={<Signup />} />
+              <Route path='/dashboard' element={<Dashboard />} />
             </Routes>
           </Router>
         </Provider>
