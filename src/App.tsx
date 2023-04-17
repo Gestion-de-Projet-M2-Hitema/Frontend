@@ -9,6 +9,7 @@ import Home from './pages/Home/Home';
 import Signin from "./pages/Auth/Signin";
 import Signup from "./pages/Auth/Signup";
 import "./style.scss"
+import Profile from "./pages/Profil/Profile";
 
 const App = () => {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
@@ -35,6 +36,7 @@ const App = () => {
               <Route path='/home' element={<Home />} />
               <Route path='/signin' element={<Signin />} />
               <Route path='/signup' element={<Signup />} />
+              <Route path='/me' element={<Profile />} />
             </Routes>
           </Router>
         </Provider>

@@ -1,0 +1,25 @@
+.Profile {
+    .profile-block {
+        position: relative;
+        width: 25vw;
+        margin: auto;
+        margin-top: 8%;
+        background-color: #e1e1e1;
+        border-radius: 10px;
+
+        .profile-block-avatar {
+            display: flex;
+            justify-content: center;
+            // overflow: hidden;
+            transform: translateY(-100px);
+
+            img {
+                width: 256px;
+                height: 256px;
+                border-radius: 100%;
+                object-fit: cover;
+                outline: 10px solid #e1e1e1;
+            }
+        }
+    }
+}
