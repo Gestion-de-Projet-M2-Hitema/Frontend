@@ -2,11 +2,13 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authStore from "./authStore";
 import signupStore from "./signupStore";
 import profileStore from "./profileStore";
+import serverStore from "./serverStore";
 
 const appReducer = combineReducers({
     auth: authStore,
     signup: signupStore,
-    profile: profileStore
+    profile: profileStore,
+    server: serverStore,
 })
 
 export const store = configureStore({

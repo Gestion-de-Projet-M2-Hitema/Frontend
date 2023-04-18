@@ -1,0 +1,22 @@
+#dashboard {
+	display: flex;
+	flex-direction: row;
+	height: 100%;
+
+	border-top: solid 1px var(--auth_form_border_color);
+
+	#servers {
+		width: 100px;
+		height: 100%;
+		// background-color: red;
+		border-right: solid 1px var(--auth_form_border_color);
+	}
+
+	#infos {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+
+		border-right: solid 1px var(--auth_form_border_color);
+	}
+}

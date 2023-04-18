@@ -1,0 +1,43 @@
+#serverBar {
+	width: 100%;
+	height: 100%;
+	overflow-y: auto;
+	padding-bottom: 10px;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	#modalCreateServer {
+		background-color: var(--main_bg_color);
+	}
+
+	.serverBlock {
+		height: 80px;
+		width: 80px;
+		display: grid;
+		align-content: center;
+		color: var(--usercard_setting_color);
+		border: solid 1px var(--usercard_setting_bg_color);
+		border-radius: 25%;
+
+		margin-top: 10px;
+
+		h2 {
+			text-align: center;
+			cursor: pointer;
+		}
+
+		svg {
+			width: 50%;
+			margin-left: 20px;
+		}
+	}
+
+	.serverBlock:hover {
+		cursor: pointer;
+		color: var(--main_text_color);
+		background-color: var(--usercard_setting_bg_color);
+	}
+	
+}
