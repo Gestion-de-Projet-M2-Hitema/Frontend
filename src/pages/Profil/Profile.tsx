@@ -2,21 +2,29 @@ import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch, RootState } from "../../stores/store"
 import "./style.scss"
 import { ChangeEvent, useEffect, useState } from "react"
-import { getMe, postUpdate } from "../../stores/profileStore"
+import { getMe, postPasswordUpdate, postUpdate } from "../../stores/profileStore"
 
 const Profile = () => {
     const {avatar, name, username, email, friends, created, status} = useSelector((state: RootState) => state.profile)
     const dispatch = useDispatch<AppDispatch>();
     const [isEditMode, setIsEditMode] = useState(false)
     const [user, setUser] = useState<{name: string, username: string, email: string}>({name, username, email})
+    const [password, setPassword] = useState<{oldPassword: string, password: string, passwordConfirm: string}>({oldPassword: "", password: "", passwordConfirm: ""})
+    const [hasPwdChange, setHasPwdChange] = useState(false)
 
     const handleEditMode = () => {
         setIsEditMode(prev => !prev)
-        if (isEditMode) dispatch(postUpdate(user))
+        if (isEditMode && !hasPwdChange) dispatch(postUpdate(user))
+        if (isEditMode && hasPwdChange) dispatch(postPasswordUpdate(password))
     }
 
     const handleInfoChange = (e: any) => {
         setUser((userinfo) => ({...userinfo, [e.target.name]: e.target.value}))
+    }
+
+    const handlePasswordChange = (e: any) => {
+        setHasPwdChange(true)
+        setPassword((password) => ({...password, [e.target.name]: e.target.value}))
     }
 
     useEffect(() => {
@@ -26,7 +34,6 @@ const Profile = () => {
     useEffect(() => {
         setUser({name, username, email})
     }, [name, username, email])
-    
 
     return (
         <div className="Profile">
@@ -54,6 +61,19 @@ const Profile = () => {
                             {friends && friends.map((friend: any) => (
                                 <div className="profile-block-content-list-friend-name">{friend.name}</div>
                             ))}
+                        </div>
+                        <div className="separator"></div>
+                        <div className="profile-block-content-list-element">
+                            <label htmlFor="oldPassword">Old password</label>
+                            <input type="password" name="oldPassword" onChange={handlePasswordChange} minLength={6} maxLength={72} disabled={!isEditMode} />
+                        </div>
+                        <div className="profile-block-content-list-element">
+                            <label htmlFor="password">New password</label>
+                            <input type="password" name="password" onChange={handlePasswordChange} minLength={6} maxLength={72} disabled={!isEditMode} />
+                        </div>
+                        <div className="profile-block-content-list-element">
+                            <label htmlFor="passwordConfirm">Password confirm</label>
+                            <input type="password" name="passwordConfirm" onChange={handlePasswordChange} minLength={6} maxLength={72} disabled={!isEditMode} />
                         </div>
                     </div>
                 </div>

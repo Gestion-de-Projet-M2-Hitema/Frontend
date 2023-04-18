@@ -25,6 +25,18 @@ export const postUpdate = createAsyncThunk(
     }
 )
 
+export const postPasswordUpdate = createAsyncThunk(
+    'profile/postPasswordUpdate',
+    async ({oldPassword, password, passwordConfirm}: {oldPassword: string, password: string, passwordConfirm: string}) => {
+        try {
+            const response = await axios.post(import.meta.env.VITE_API_ENDPOINT + `/users/updatePassword`, {oldPassword, password, passwordConfirm}, {withCredentials: true})
+            return response.data
+        } catch (error: any) {
+            return console.error(error)
+        }
+    }
+)
+
 export interface ProfileState {
     status: "fulfilled" | "rejected" | "pending" | "",
     avatar: string,

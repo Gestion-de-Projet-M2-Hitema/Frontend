@@ -50,7 +50,7 @@
                     justify-content: space-between;
 
                     label {
-                        width: 8rem;
+                        width: 14rem;
                     }
 
                     input {
@@ -61,6 +61,7 @@
         }
 
         .profile-block-footer{
+            margin-top: 1rem;
             display: flex;
             justify-content: flex-end;
 
@@ -75,6 +76,13 @@
                 background-color: #5865f2;
                 cursor: pointer;
             }
+        }
+
+        .separator {
+            width: 100%;
+            height: 2px;
+            background-color: #5865f2;
+            margin: .75rem 0;
         }
     }
 }
