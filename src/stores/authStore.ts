@@ -50,7 +50,8 @@ export const authSlice = createSlice({
       builder.addCase(postLogin.fulfilled, (state, action) => {
         state.status = "fulfilled"
         state.error = {email: "", password: ""}
-        state.token = Cookies.get("jwt")|| ""
+        state.token = action.payload.token
+        Cookies.set('jwt', action.payload.token, { expires: 7 })
       })
       builder.addCase(postLogin.rejected, (state, action) => {
         state.status = "rejected"
