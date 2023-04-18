@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from 'axios';
 
+import Cookies from "js-cookie";
+
 export const postLogin = createAsyncThunk(
     'auth/postLogin',
     async ({ email, password }: { email: string, password: string }, {rejectWithValue}) => {
@@ -15,9 +17,7 @@ export const postLogin = createAsyncThunk(
 
 export interface AuthState {
     status: "fulfilled" | "rejected" | "pending" | "",
-    name: string;
-    username: string;
-    avatar: string;
+    token: string;
     error: {
         email: string
         password: string
@@ -26,9 +26,7 @@ export interface AuthState {
 
 const initialState: AuthState = {
     status: "",
-    name: "",
-    username: "",
-    avatar: "",
+    token: Cookies.get("jwt")|| "",
     error: {
         email: "",
         password: "",
@@ -44,20 +42,15 @@ export const authSlice = createSlice({
         },
         logout: (state) => {
             state.status = ""
-            state.name = ""
-            state.username = ""
-            state.avatar = ""
-                
+            state.token = ""   
         }
     },
     //TODO: create new store to receive html document
     extraReducers(builder) {
       builder.addCase(postLogin.fulfilled, (state, action) => {
         state.status = "fulfilled"
-        state.name = action.payload.name
-        state.username = action.payload.username
-        state.avatar = action.payload.avatar
         state.error = {email: "", password: ""}
+        state.token = Cookies.get("jwt")|| ""
       })
       builder.addCase(postLogin.rejected, (state, action) => {
         state.status = "rejected"
