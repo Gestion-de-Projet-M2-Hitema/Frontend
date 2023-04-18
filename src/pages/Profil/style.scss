@@ -59,5 +59,22 @@
                 }
             }
         }
+
+        .profile-block-footer{
+            display: flex;
+            justify-content: flex-end;
+
+            .profile-block-button {
+                color: white;
+                width: 5rem;
+                padding: .25rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 4px;
+                background-color: #5865f2;
+                cursor: pointer;
+            }
+        }
     }
 }

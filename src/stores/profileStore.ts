@@ -6,7 +6,18 @@ export const getMe = createAsyncThunk(
     async () => {
         try {
             const response = await axios.get(import.meta.env.VITE_API_ENDPOINT + `/users/me`, {withCredentials: true})
-            console.log(response.data)
+            return response.data
+        } catch (error: any) {
+            return console.error(error)
+        }
+    }
+)
+
+export const postUpdate = createAsyncThunk(
+    'profile/postUpdate',
+    async ({name, username, email}: {name: string, username: string, email: string}) => {
+        try {
+            const response = await axios.post(import.meta.env.VITE_API_ENDPOINT + `/users/update`, {name, username, email}, {withCredentials: true})
             return response.data
         } catch (error: any) {
             return console.error(error)
