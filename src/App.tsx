@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { ThemeContext } from './context/theme.context';
 import { Provider } from "react-redux";
@@ -37,6 +37,8 @@ const App = () => {
         <Provider store={store}>
           <Router>
             <Navbar/>
+
+            
             <Routes>
               <Route path='*' element={<Home />} />
               <Route path='/home' element={<Home />} />

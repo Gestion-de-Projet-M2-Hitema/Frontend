@@ -3,9 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { RootState } from "../../stores/store";
 import Cookies from 'js-cookie'
-	
-
-
 
 import './style.scss'
 
@@ -16,6 +13,7 @@ const Home = () => {
     useEffect(() => {
         if(token != '') navigate("/dashboard")
     }, [token])
+
     return (
         <div className="home">
             <h1>Concorde</h1>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Key } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from "../../stores/store";
 import { getList, postCreateServer, resetCreateStatus } from "../../stores/serverStore";
@@ -54,7 +54,6 @@ const ServerBar = () => {
 
 	useEffect(() => {
 		dispatch(getList())
-		console.log(serverList)
 	}, [])
     
 	return (
@@ -65,7 +64,7 @@ const ServerBar = () => {
 				</div>
 			</Tooltip>
 
-			{serverList.map(s => <Tooltip title={s.name} placement="right" key={s.id}>
+			{serverList.map(s => <Tooltip title={s.name} placement="right" key={s.id as Key}>
 				<div className="serverBlock">
 					<h2>{title(s.name)}</h2>
 				</div>
