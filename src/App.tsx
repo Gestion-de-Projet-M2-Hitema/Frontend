@@ -10,13 +10,15 @@ import Signin from "./pages/Auth/Signin";
 import Signup from "./pages/Auth/Signup";
 import Dashboard from "./pages/Dashboard/Dashboard";
 
+
+
 import "./style.scss"
 import Profile from "./pages/Profil/Profile";
 import Cookies from "js-cookie";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-  const [user] = useState(Cookies.get("jwt") || "")
 
   const changeTheme = () => {
     if(theme === "light"){
@@ -40,10 +42,8 @@ const App = () => {
               <Route path='/home' element={<Home />} />
               <Route path='/signin' element={<Signin />} />
               <Route path='/signup' element={<Signup />} />
-              <Route element={<ProtectedRoute user={user} />}>
-                <Route path='/me' element={<Profile />} />
-                <Route path='/dashboard' element={<Dashboard />} />
-              </Route>
+              <Route path='/me' element={<ProtectedRoute><Profile/></ProtectedRoute>} />
+              <Route path='/dashboard' element={<ProtectedRoute><Dashboard/></ProtectedRoute>} />
             </Routes>
           </Router>
         </Provider>
@@ -52,10 +52,6 @@ const App = () => {
   )
 }
 
-const ProtectedRoute = ({ user, redirectPath = '/home', children }: any) => {
-  if (!user) return <Navigate to={redirectPath} replace />;
 
-  return children;
-};
 
 export default App

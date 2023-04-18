@@ -26,7 +26,7 @@ export interface AuthState {
 
 const initialState: AuthState = {
     status: "",
-    token: Cookies.get("jwt")|| "",
+    token: Cookies.get("jwt") || "",
     error: {
         email: "",
         password: "",
