@@ -1,3 +1,4 @@
+import ServerBar from "../../components/ServerBar/ServerBar"
 import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,8 +17,15 @@ const Dashboard = () => {
 	}, [])
 
 	return (
-		<div>
-			<UserCard />
+		<div id="dashboard">
+			<div id="servers">
+				<ServerBar />
+			</div>
+			<div id="infos">
+				<div></div>
+				<UserCard />
+			</div>
+			
 		</div>
 	)
 }
