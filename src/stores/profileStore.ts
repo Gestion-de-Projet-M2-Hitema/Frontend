@@ -6,7 +6,7 @@ export const getMe = createAsyncThunk(
     async () => {
         try {
             const response = await axios.get(import.meta.env.VITE_API_ENDPOINT + `/users/me`, {withCredentials: true})
-            console.log(response.data)
+            // console.log(response.data)
             return response.data
         } catch (error: any) {
             return console.error(error)

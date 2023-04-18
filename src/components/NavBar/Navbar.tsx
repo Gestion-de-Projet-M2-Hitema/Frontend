@@ -10,7 +10,7 @@ import "./style.scss"
 
 const Navbar = () => {
 	const navigate = useNavigate();
-	const {username} = useSelector((state: RootState) => state.auth)
+	const {token} = useSelector((state: RootState) => state.auth)
 	const dispatch = useDispatch<AppDispatch>();
 	const themes = useContext(ThemeContext);
 
@@ -34,7 +34,7 @@ const Navbar = () => {
 			<div>
 				<button onClick={themes.changeTheme}>{themes.theme}</button>
 
-				{username == '' && 
+				{token == '' && 
 					<>
 						<NavLink
 							to="/signup"
@@ -54,7 +54,7 @@ const Navbar = () => {
 						</NavLink>
 					</>
 				}
-				{username != '' &&
+				{token != '' &&
 					<button onClick={() => handleLogout()}>Logout</button>
 				}
 
