@@ -1,9 +1,8 @@
 import { useState, useEffect, Key } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from "../../stores/store";
-import { getList, postCreateServer, resetCreateStatus } from "../../stores/serverStore";
+import { getList, postCreateServer, resetCreateStatus, setServer } from "../../stores/serverStore";
 import { Tooltip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Button } from "@mui/material";
-
 
 import PlusIcon from "../../assets/icons/PlusIcon";
 
@@ -11,7 +10,7 @@ import './style.scss'
 
 const ServerBar = () => {
 	const dispatch = useDispatch<AppDispatch>();
-	const {serverList, status, statusCreate, error} = useSelector((state: RootState) => state.server)
+	const {serverList, statusCreate, error} = useSelector((state: RootState) => state.server)
 
 	const [open, setOpen] = useState(false);
 	const [name, setName] = useState("")
@@ -39,8 +38,12 @@ const ServerBar = () => {
 	}
 
 	useEffect(() => {
-		if(statusCreate == "fulfilled") setOpen(false);
+		if(statusCreate == "fulfilled"){
+			setOpen(false);
+			dispatch(resetCreateStatus())
+		}
 		if(statusCreate == "rejected") {
+			dispatch(resetCreateStatus())
 			setIsError(true)
 			setErrorText(JSON.stringify(error))
 		}
@@ -48,7 +51,7 @@ const ServerBar = () => {
 
 	const title = (name: String) => {
 		let matches = name.match(/\b(\w)/g); // ['J','S','O','N']
-		return (matches) ? matches.join('').toUpperCase() : ""; // JSON
+		return (matches) ? matches.join('').toUpperCase().slice(0,4) : ""; // JSON
 	}
 
 
@@ -65,7 +68,7 @@ const ServerBar = () => {
 			</Tooltip>
 
 			{serverList.map(s => <Tooltip title={s.name} placement="right" key={s.id as Key}>
-				<div className="serverBlock">
+				<div className="serverBlock" onClick={() => { dispatch(setServer(s))}}>
 					<h2>{title(s.name)}</h2>
 				</div>
 			</Tooltip>)}
