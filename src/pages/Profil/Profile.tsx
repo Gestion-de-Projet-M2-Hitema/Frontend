@@ -30,8 +30,11 @@ const Profile = () => {
 
     const handleChangeAvatar = (e: any) => {
         console.log(e.target.files[0])
+        const formData = new FormData()
+        formData.append("file", e.target.files[0])
+        console.log(formData)
         setNewAvatar(URL.createObjectURL(e.target.files[0]))
-        dispatch(postAvatar({avatar: URL.createObjectURL(e.target.files[0])}))
+        dispatch(postAvatar({avatar: formData}))
     }
 
     useEffect(() => {
