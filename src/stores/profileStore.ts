@@ -37,6 +37,18 @@ export const postPasswordUpdate = createAsyncThunk(
     }
 )
 
+export const postAvatar = createAsyncThunk(
+    'profile/postAvatar',
+    async ({avatar}: {avatar: string}) => {
+        try {
+            const response = await axios.post(import.meta.env.VITE_API_ENDPOINT + `/users/upload`, {file: avatar}, {withCredentials: true, headers: {"Content-Type": "multipart/form-data"}})
+            return response.data
+        } catch (error: any) {
+            return console.error(error)
+        }
+    }
+)
+
 export interface ProfileState {
     status: "fulfilled" | "rejected" | "pending" | "",
     avatar: string,

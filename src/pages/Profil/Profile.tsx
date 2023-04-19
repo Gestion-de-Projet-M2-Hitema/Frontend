@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch, RootState } from "../../stores/store"
 import "./style.scss"
 import { ChangeEvent, useEffect, useState } from "react"
-import { getMe, postPasswordUpdate, postUpdate } from "../../stores/profileStore"
+import { getMe, postAvatar, postPasswordUpdate, postUpdate } from "../../stores/profileStore"
 
 const Profile = () => {
     const {avatar, name, username, email, friends, created, status} = useSelector((state: RootState) => state.profile)
@@ -11,6 +11,7 @@ const Profile = () => {
     const [user, setUser] = useState<{name: string, username: string, email: string}>({name, username, email})
     const [password, setPassword] = useState<{oldPassword: string, password: string, passwordConfirm: string}>({oldPassword: "", password: "", passwordConfirm: ""})
     const [hasPwdChange, setHasPwdChange] = useState(false)
+    const [newAvatar, setNewAvatar] = useState("")
 
     const handleEditMode = () => {
         setIsEditMode(prev => !prev)
@@ -25,6 +26,12 @@ const Profile = () => {
     const handlePasswordChange = (e: any) => {
         setHasPwdChange(true)
         setPassword((password) => ({...password, [e.target.name]: e.target.value}))
+    }
+
+    const handleChangeAvatar = (e: any) => {
+        console.log(e.target.files[0])
+        setNewAvatar(URL.createObjectURL(e.target.files[0]))
+        dispatch(postAvatar({avatar: URL.createObjectURL(e.target.files[0])}))
     }
 
     useEffect(() => {
@@ -43,6 +50,10 @@ const Profile = () => {
                 </div>}
                 <div className="profile-block-content">
                     <div className="profile-block-content-header">Profile</div>
+                    <div>
+                        Change avatar :{" "}
+                        <input type="file" className="profile-block-button" onChange={handleChangeAvatar} accept="image/png, image/jpeg, image/jpg" style={{width: "15rem"}} />
+                    </div>
                     <div className="profile-block-content-created">Account created the {created && new Date(created).toLocaleDateString()}</div>
                     <div className="profile-block-content-list">
                         <div className="profile-block-content-list-element">
