@@ -41,7 +41,9 @@ export const postAvatar = createAsyncThunk(
     'profile/postAvatar',
     async ({avatar}: {avatar: FormData}) => {
         try {
-            const response = await axios.post(import.meta.env.VITE_API_ENDPOINT + `/users/upload`, avatar, {withCredentials: true, headers: {"Content-Type": "multipart/form-data"}})
+            const response = await axios.post(import.meta.env.VITE_API_ENDPOINT + `/users/upload`, {avatar}, {
+                withCredentials: true, headers: {"Content-Type": "multipart/form-data"}
+            })
             return response.data
         } catch (error: any) {
             return console.error(error)

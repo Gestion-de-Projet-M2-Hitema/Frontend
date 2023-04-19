@@ -29,12 +29,8 @@ const Profile = () => {
     }
 
     const handleChangeAvatar = (e: any) => {
-        console.log(e.target.files[0])
-        const formData = new FormData()
-        formData.append("file", e.target.files[0])
-        console.log(formData)
         setNewAvatar(URL.createObjectURL(e.target.files[0]))
-        dispatch(postAvatar({avatar: formData}))
+        dispatch(postAvatar({avatar: e.target.files[0]}))
     }
 
     useEffect(() => {
@@ -49,7 +45,7 @@ const Profile = () => {
         <div className="Profile">
             <div className="profile-block">
                 {avatar && <div className="profile-block-avatar">
-                    <img src={avatar} alt={`${name}'s avatar`} />
+                    <img src={newAvatar || avatar} alt={`${name}'s avatar`} />
                 </div>}
                 <div className="profile-block-content">
                     <div className="profile-block-content-header">Profile</div>
