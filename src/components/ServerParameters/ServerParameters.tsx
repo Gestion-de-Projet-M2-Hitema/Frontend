@@ -126,7 +126,7 @@ const ServerParameters = () => {
 
 			<Dialog 
 				open={openDelete} 
-				onClose={handleClose} 
+				onClose={() => setOpenDelete(false)} 
 				id="modalDeleteServer" 
 				fullWidth={true} 
 				maxWidth="xs"
