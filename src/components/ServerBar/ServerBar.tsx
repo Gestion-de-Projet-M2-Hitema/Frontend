@@ -7,9 +7,12 @@ import { Tooltip, Dialog, DialogActions, DialogContent, DialogContentText, Dialo
 import PlusIcon from "../../assets/icons/PlusIcon";
 
 import './style.scss'
+import { useNavigate } from "react-router-dom";
+import FriendIcon from "../../assets/icons/FriendIcon";
 
 const ServerBar = () => {
 	const dispatch = useDispatch<AppDispatch>();
+	const navigate = useNavigate()
 	const {serverList, statusCreate, error} = useSelector((state: RootState) => state.server)
 
 	const [open, setOpen] = useState(false);
@@ -61,6 +64,11 @@ const ServerBar = () => {
     
 	return (
 		<div id="serverBar">
+			<Tooltip title="Friends" placement="right">
+				<div className="serverBlock" onClick={() => navigate("/dashboard/friends")}>
+					<FriendIcon />
+				</div>
+			</Tooltip>
 			<Tooltip title="Add Server" placement="right">
 				<div className="serverBlock" onClick={() => handleOpen()}>
 					<PlusIcon />
@@ -68,7 +76,10 @@ const ServerBar = () => {
 			</Tooltip>
 
 			{serverList.map(s => <Tooltip title={s.name} placement="right" key={s.id as Key}>
-				<div className="serverBlock" onClick={() => { dispatch(setServerId(s.id as string))}}>
+				<div className="serverBlock" onClick={() => {
+					navigate("/dashboard")
+					dispatch(setServerId(s.id as string))
+				}}>
 					<h2>{title(s.name)}</h2>
 				</div>
 			</Tooltip>)}

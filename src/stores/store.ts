@@ -3,6 +3,7 @@ import authStore from "./authStore";
 import signupStore from "./signupStore";
 import profileStore from "./profileStore";
 import serverStore from "./serverStore";
+import friendStore from "./friendStore";
 import channelStore from "./channelStore";
 
 const appReducer = combineReducers({
@@ -10,6 +11,7 @@ const appReducer = combineReducers({
     signup: signupStore,
     profile: profileStore,
     server: serverStore,
+    friend: friendStore,
     channel: channelStore,
 })
 
