@@ -6,7 +6,6 @@ export const getList = createAsyncThunk(
 	async () => {
 		try {
 			const response = await axios.get(import.meta.env.VITE_API_ENDPOINT + `/servers/list`, {withCredentials: true})
-			// console.log(response.data)
 			return response.data
 		} catch (error: any) {
 			return console.error(error)
@@ -56,7 +55,6 @@ export interface Server {
 	members: string[],
 	created: string,
 	updated: string,
-	// channels: Array,
 }
 
 export interface ServerState {
@@ -65,7 +63,7 @@ export interface ServerState {
 	statusUpdate: "fulfilled" | "rejected" | "pending" | "",
 	statusDelete: "fulfilled" | "rejected" | "pending" | "",
 	serverList: Server[],
-	server: Server,
+	serverId: string,
 	error: Object,
 }
 
@@ -75,7 +73,7 @@ const initialState: ServerState = {
 	statusUpdate: '',
 	statusDelete: '',
 	serverList: [],
-	server: { id: '', name: '', members: [], created: '', updated: ''},
+	serverId: '',
 	error: {}
 }
 
@@ -92,13 +90,8 @@ export const serverSlice = createSlice({
 		resetDeleteStatus: (state) => {
 			state.statusDelete = ""
 		},
-		setServer: (state, action) => {
-			let {id, name, members, created, updated} = action.payload
-			state.server.id = id;
-			state.server.name = name;
-			state.server.members = members;
-			state.server.created = created;
-			state.server.updated = updated;
+		setServerId: (state, action) => {
+			state.serverId = action.payload
 		}
 	},
 	extraReducers(builder) {
@@ -123,7 +116,6 @@ export const serverSlice = createSlice({
 			if(~!!index) {
 				state.serverList[index] = action.payload
 			}
-			state.server = action.payload
 		})
 		builder.addCase(postUpdateServer.rejected, (state, action) => {
 			state.statusUpdate = "rejected"
@@ -131,9 +123,9 @@ export const serverSlice = createSlice({
 		})
 		builder.addCase(postDeleteServer.fulfilled, (state, action) => {
 			state.statusDelete = "fulfilled"
-			let sl = state.serverList.filter(e => e.id != state.server.id)
+			let sl = state.serverList.filter(e => e.id != state.serverId)
 			state.serverList = sl
-			state.server = { id: '', name: '', members: [], created: '', updated: ''}
+			state.serverId = ""
 		})
 		builder.addCase(postDeleteServer.rejected, (state, action) => {
 			state.statusDelete = "rejected"
@@ -146,7 +138,7 @@ export const {
 	resetCreateStatus,
 	resetUpdateStatus,
 	resetDeleteStatus,
-	setServer
+	setServerId
 } = serverSlice.actions
 
 export default serverSlice.reducer
