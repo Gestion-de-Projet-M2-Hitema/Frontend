@@ -6,7 +6,6 @@ export const getListChannel = createAsyncThunk(
 	async (id: string) => {
 		try {
 			const response = await axios.get(import.meta.env.VITE_API_ENDPOINT + `/channels/list/` + id, {withCredentials: true})
-			console.log(response.data)
 			return response.data
 		} catch (error: any) {
 			return console.error(error)
