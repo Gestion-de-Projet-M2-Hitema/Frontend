@@ -50,7 +50,7 @@ export const postDeleteServer = createAsyncThunk(
 	}
 )
 
-interface Server {
+export interface Server {
 	id: string,
   name: string,
 	members: string[],

@@ -15,6 +15,7 @@ import Chat from "./components/Chat/Chat";
 import Profile from "./pages/Profil/Profile";
 
 import "./style.scss"
+import { FriendChat } from "./pages/FriendChat/FriendChat";
 
 
 const App = () => {
@@ -46,6 +47,7 @@ const App = () => {
               <Route path='/dashboard' element={<ProtectedRoute><Dashboard/></ProtectedRoute>}>
                 <Route index element={<ServerParameters />}/>
                 <Route path='/dashboard/chat' element={<Chat />}/>
+                <Route path='/dashboard/friends' element={<FriendChat />}/>
               </Route>
             </Routes>
           </Router>
