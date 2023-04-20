@@ -6,14 +6,14 @@ import { AppDispatch, RootState } from "../../stores/store";
 import { getMe } from "../../stores/profileStore"
 import UserCard from "../../components/UserCard/UserCard"
 
-import ServerNavigation from "../../components/ServerNavigatiob/ServerNavigation";
+import ServerNavigation from "../../components/ServerNavigation/ServerNavigation";
 
 import "./style.scss"
 
 const Dashboard = () => {
 	const navigate = useNavigate()
 	const dispatch = useDispatch<AppDispatch>();
-	const {server} = useSelector((state: RootState) => state.server)
+	const {serverList, serverId} = useSelector((state: RootState) => state.server)
 
 	useEffect(() => {
 		dispatch(getMe())
@@ -29,9 +29,9 @@ const Dashboard = () => {
 				<UserCard />
 			</div>
 
-			{server.id != '' && <Outlet />}
+			{serverId != '' && <Outlet />}
 			
-			{server.id == '' &&
+			{serverId == '' &&
 				<div>
 					<p>pas de server sélectionné</p>
 				</div>
