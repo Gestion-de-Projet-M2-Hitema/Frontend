@@ -1,7 +1,7 @@
 import { useState, useEffect, Key } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from "../../stores/store";
-import { getList, postCreateServer, resetCreateStatus, setServer } from "../../stores/serverStore";
+import { getList, postCreateServer, resetCreateStatus, setServerId } from "../../stores/serverStore";
 import { Tooltip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Button } from "@mui/material";
 
 import PlusIcon from "../../assets/icons/PlusIcon";
@@ -68,7 +68,7 @@ const ServerBar = () => {
 			</Tooltip>
 
 			{serverList.map(s => <Tooltip title={s.name} placement="right" key={s.id as Key}>
-				<div className="serverBlock" onClick={() => { dispatch(setServer(s))}}>
+				<div className="serverBlock" onClick={() => { dispatch(setServerId(s.id as string))}}>
 					<h2>{title(s.name)}</h2>
 				</div>
 			</Tooltip>)}

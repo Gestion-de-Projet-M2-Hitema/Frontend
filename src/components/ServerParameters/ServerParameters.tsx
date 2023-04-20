@@ -1,14 +1,16 @@
 import { useState, useEffect, Key } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from "../../stores/store";
-import { getList, postUpdateServer, postDeleteServer, resetUpdateStatus, resetDeleteStatus } from "../../stores/serverStore";
+import { getList, postUpdateServer, postDeleteServer, resetUpdateStatus, resetDeleteStatus, Server } from "../../stores/serverStore";
 import { Tooltip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Button, Snackbar, Alert } from "@mui/material";
 
 import './style.scss'
 
 const ServerParameters = () => {
 	const dispatch = useDispatch<AppDispatch>();
-	const {server, statusUpdate, statusDelete, error} = useSelector((state: RootState) => state.server)
+	const {serverList, serverId, statusUpdate, statusDelete, error} = useSelector((state: RootState) => state.server)
+
+	const [server, setServer] = useState<Server>({id: '', name: '', members: [], created: '', updated: ''})
 
 	const [open, setOpen] = useState(false)
 	const [name, setName] = useState("")
@@ -69,6 +71,11 @@ const ServerParameters = () => {
 			setErrorText(JSON.stringify(error))
 		}
 	}, [statusDelete])
+
+	useEffect(() => {
+		let si = serverList.findIndex(e => e.id == serverId)
+		if(si >= 0) setServer(serverList[si])	
+	}, [serverList, serverId])
     
 	return (
 		<div id="serverParameters">
