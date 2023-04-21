@@ -31,37 +31,7 @@ const Chat = () => {
 	}
 
 	const [fakeMessages, setFakeMessages] = useState<ChatMessage[]>([
-		{
-			id: "0",
-			content: "coucou",
-			image: null,
-			user: "Frat",
-			date: new Date().toLocaleDateString(),
-		}, {
-			id: "1",
-			content: "prout",
-			image: "https://pocketbase.gturyz.dev/api/files/_pb_users_auth_/9pf96upgmw98vv4/screenshot_20220622_155651_jXPPY0GXp0.png",
-			user: "Léo",
-			date: new Date().toLocaleDateString(),
-		}, {
-			id: "1",
-			content: "prout",
-			image: "https://pocketbase.gturyz.dev/api/files/_pb_users_auth_/9pf96upgmw98vv4/screenshot_20220622_155651_jXPPY0GXp0.png",
-			user: "Léo",
-			date: new Date().toLocaleDateString(),
-		}, {
-			id: "1",
-			content: "prout",
-			image: "https://pocketbase.gturyz.dev/api/files/_pb_users_auth_/9pf96upgmw98vv4/screenshot_20220622_155651_jXPPY0GXp0.png",
-			user: "Léo",
-			date: new Date().toLocaleDateString(),
-		}, {
-			id: "1",
-			content: "prout",
-			image: "https://pocketbase.gturyz.dev/api/files/_pb_users_auth_/9pf96upgmw98vv4/screenshot_20220622_155651_jXPPY0GXp0.png",
-			user: "Léo",
-			date: new Date().toLocaleDateString(),
-		}
+		
 	])
 
 	const handleOpen = () => {
