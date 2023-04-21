@@ -17,6 +17,8 @@ const Dashboard = () => {
 	const {serverList, serverId} = useSelector((state: RootState) => state.server)
 	const location = useLocation()
 	const isFriendsPage = location.pathname == "/dashboard/friends"
+	const isExplorePage = location.pathname == "/dashboard/explore"
+	const isMePage = location.pathname == "/dashboard/me"
 
 	useEffect(() => {
 		dispatch(getMe())
@@ -28,20 +30,14 @@ const Dashboard = () => {
 				<ServerBar />
 			</div>
 			<div id="infos">
-				{isFriendsPage
-				? <FriendNavigation />
-				: <ServerNavigation />
-				}
+				{isFriendsPage && <FriendNavigation />}
+				{(isExplorePage || isMePage) && <div> </div>}
+				{(!isFriendsPage && !isExplorePage && !isMePage) && <ServerNavigation />}
 				<UserCard />
 			</div>
 
-			{serverId != '' && <Outlet />}
+			{(isFriendsPage || isExplorePage || serverId != '') && <Outlet />}
 			
-			{serverId == '' &&
-				<div>
-					<p>pas de server sélectionné</p>
-				</div>
-			}
 		</div>
 	)
 }

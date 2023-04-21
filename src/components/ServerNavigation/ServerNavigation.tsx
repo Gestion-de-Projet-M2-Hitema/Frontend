@@ -69,8 +69,10 @@ const ServerNavigation = () => {
 				<h1>{server.name}</h1>
 				<button onClick={() => {navigate("/dashboard")}}>Params</button>
 				<br/>
+				<button onClick={() => {navigate("/dashboard/userRequests")}}>Request</button>
+				<br/>
 				<button onClick={handleOpen}>Create channel</button>
-
+				
 				<ul>
 					{channelList.map(e => <li key={e.id}>
 						<button onClick={() => handleChannelSelection(e.id as string)}>{e.name}</button>

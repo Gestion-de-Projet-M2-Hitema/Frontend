@@ -5,6 +5,7 @@ import profileStore from "./profileStore";
 import serverStore from "./serverStore";
 import friendStore from "./friendStore";
 import channelStore from "./channelStore";
+import srStore from "./ServerRequestStore"
 
 const appReducer = combineReducers({
     auth: authStore,
@@ -13,6 +14,7 @@ const appReducer = combineReducers({
     server: serverStore,
     friend: friendStore,
     channel: channelStore,
+    sr: srStore
 })
 
 export const store = configureStore({
