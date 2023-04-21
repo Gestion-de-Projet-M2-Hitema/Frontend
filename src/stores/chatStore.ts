@@ -18,7 +18,11 @@ export interface ChatMessage {
     id: string,
     content: string,
     image: string | null,
-    user: string,
+    user: {
+        id: string,
+        username: string,
+        avatar: string
+    },
     date: string,
 }
 

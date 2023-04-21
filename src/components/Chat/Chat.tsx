@@ -26,6 +26,7 @@ const Chat = () => {
 
 	const inputMessage = useRef<any>(null)
 
+	const [messageHistory, setMessageHistory] = useState<ChatMessage[]>([])
 
 	const handleOpen = () => {
 		setName(channel.name)
@@ -96,15 +97,16 @@ const Chat = () => {
 	}, [channelList, channelId])
 
 	useEffect(() => {
-		const onNewMessage = (e: any) => {
-			console.log(e)
-			console.log("tste")
-		}
-	
-		socket.on(`new-message`, handleSendMessage);
+		const onAllMessages = (data: any) => setMessageHistory([...data].reverse())
+		const onNewMessage = (data: any) => setMessageHistory((prev: ChatMessage[]) => [...prev, data])
+
+		socket.on("join-channel", onAllMessages)
+		socket.on("new-message", onNewMessage)
+		socket.emit("join-channel", {token: Cookies.get("jwt") || "", id: channelId})
 	
 		return () => {
-		  socket.off(`new-message`, handleSendMessage);
+			socket.off("join-channel", onAllMessages)
+			socket.off("new-message", onNewMessage)
 		};
 	}, [])
 
@@ -176,15 +178,15 @@ const Chat = () => {
 
 	  <div className="chat-zone">
 		<div className="chat-message-list">
-			{/* {fakeMessages.length > 0 && fakeMessages.map((message: ChatMessage) => (
+			{messageHistory.length > 0 && messageHistory.map((message: ChatMessage) => (
 				<div className="chat-message-element">
-					<div className="chat-message-author"><span>{message.user}</span> said at {message.date}</div>
+					<div className="chat-message-author"><span>{message.user.username}</span> said at {message.date}</div>
 					<div className="chat-message-content">{message.content}</div>
 					{message.image && (
 						<img src={message.image} alt="user sent image" />
 					)}
 				</div>
-			))} */}
+			))}
 		</div>
 		<div className="chat-input">
 			<TextField placeholder="Message" label="Write your message here" variant="filled" onKeyUp={handleSendMessage} fullWidth color="secondary" focused ref={inputMessage} />
