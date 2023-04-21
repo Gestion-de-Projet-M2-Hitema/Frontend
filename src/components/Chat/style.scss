@@ -1,0 +1,57 @@
+.Chat {
+    width: 80%;
+    height: 100%;
+    margin: 0 1rem;
+    position: relative;
+
+    .channel-info {
+        position: relative;
+        padding: 1rem 0;
+        background-color: var(--main_bg_color);
+        z-index: 2;
+    }
+
+    .chat-zone {
+        position: absolute;
+        top: 20px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: flex-end;
+        margin: 1rem;
+        overflow-y: hidden;
+
+        .chat-input {
+            width: 100%;
+        }
+
+        .chat-message-list {
+            margin: 1.5rem 0;
+            padding: 1rem 0;
+            display: flex;
+            flex-flow: column nowrap;
+            gap: 1rem;
+            border-bottom: 1px solid #cacaca;
+            overflow-x: auto;
+
+            .chat-message-element {
+
+                .chat-message-author {
+                    font-size: .8rem;
+                    color: #a2a2a2d6;
+                    font-weight: 600;
+    
+                    span {
+                        color: #7a57ed;
+                    }
+                }
+
+                img {
+                    max-width: 20rem;
+                }
+            }
+        }
+    }
+}
