@@ -4,6 +4,7 @@ import { AppDispatch, RootState } from "../../stores/store";
 import { useNavigate, Outlet } from "react-router-dom";
 import { postUpdateChannel, postDeleteChannel, resetUpdateChannelStatus, resetDeleteChannelStatus, Channel } from "../../stores/channelStore";
 import { Tooltip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Button, Snackbar, Alert } from "@mui/material";
+import "./style.scss"
 
 const Chat = () => {
 	const navigate = useNavigate()
@@ -19,6 +20,49 @@ const Chat = () => {
 
 	const [openDelete, setOpenDelete] = useState(false)
 	const [openErrorAlert, setOpenErrorAlert] = useState(false)
+
+	// Temporary, should be moved to the chat store
+	interface ChatMessage {
+		id: string,
+		content: string,
+		image: string | null,
+		user: string,
+		date: string,
+	}
+
+	const [fakeMessages, setFakeMessages] = useState<ChatMessage[]>([
+		{
+			id: "0",
+			content: "coucou",
+			image: null,
+			user: "Frat",
+			date: new Date().toLocaleDateString(),
+		}, {
+			id: "1",
+			content: "prout",
+			image: "https://pocketbase.gturyz.dev/api/files/_pb_users_auth_/9pf96upgmw98vv4/screenshot_20220622_155651_jXPPY0GXp0.png",
+			user: "Léo",
+			date: new Date().toLocaleDateString(),
+		}, {
+			id: "1",
+			content: "prout",
+			image: "https://pocketbase.gturyz.dev/api/files/_pb_users_auth_/9pf96upgmw98vv4/screenshot_20220622_155651_jXPPY0GXp0.png",
+			user: "Léo",
+			date: new Date().toLocaleDateString(),
+		}, {
+			id: "1",
+			content: "prout",
+			image: "https://pocketbase.gturyz.dev/api/files/_pb_users_auth_/9pf96upgmw98vv4/screenshot_20220622_155651_jXPPY0GXp0.png",
+			user: "Léo",
+			date: new Date().toLocaleDateString(),
+		}, {
+			id: "1",
+			content: "prout",
+			image: "https://pocketbase.gturyz.dev/api/files/_pb_users_auth_/9pf96upgmw98vv4/screenshot_20220622_155651_jXPPY0GXp0.png",
+			user: "Léo",
+			date: new Date().toLocaleDateString(),
+		}
+	])
 
 	const handleOpen = () => {
 		setName(channel.name)
@@ -78,10 +122,13 @@ const Chat = () => {
 	}, [channelList, channelId])
     
 	return (
-		<div>
-			<p>{channel.name}</p>
-			<button onClick={handleOpen}>Update channel name</button>
-			<button onClick={() => setOpenDelete(true)}>Delete channel</button>
+		<div className="Chat">
+			{/* CHANNEL INFO / ACTIONS */}
+			<div className="channel-info">
+				<div>{channel.name}</div>
+				<button onClick={handleOpen}>Update channel name</button>
+				<button onClick={() => setOpenDelete(true)}>Delete channel</button>
+			</div>
 
 			<Dialog 
 				open={open} 
@@ -136,6 +183,26 @@ const Chat = () => {
           {errorText}
         </Alert>
       </Snackbar>
+
+
+	  {/* CHAT PAGE */}
+
+	  <div className="chat-zone">
+		<div className="chat-message-list">
+			{fakeMessages.length > 0 && fakeMessages.map((message: ChatMessage) => (
+				<div className="chat-message-element">
+					<div className="chat-message-author"><span>{message.user}</span> said at {message.date}</div>
+					<div className="chat-message-content">{message.content}</div>
+					{message.image && (
+						<img src={message.image} alt="user sent image" />
+					)}
+				</div>
+			))}
+		</div>
+		<div className="chat-input">
+			<TextField placeholder="Message" label="Write your message here" variant="filled" fullWidth color="secondary" focused />
+		</div>
+	  </div>
 
 		</div>
 	)
