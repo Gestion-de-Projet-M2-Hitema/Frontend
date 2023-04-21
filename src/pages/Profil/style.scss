@@ -1,4 +1,10 @@
 .Profile {
+
+    width: 80%;
+    height: 80%;
+    display: grid;
+    align-content: baseline;
+
     .profile-block {
         position: relative;
         width: 25vw;

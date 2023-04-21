@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from "../../stores/store";
 import { getList, postCreateServer, resetCreateStatus, setServerId } from "../../stores/serverStore";
 import { Tooltip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 import PlusIcon from "../../assets/icons/PlusIcon";
+import FriendIcon from "../../assets/icons/FriendIcon";
+import ExploreIcon from "../../assets/icons/ExploreIcon";
 
 import './style.scss'
-import { useNavigate } from "react-router-dom";
-import FriendIcon from "../../assets/icons/FriendIcon";
 
 const ServerBar = () => {
 	const dispatch = useDispatch<AppDispatch>();
@@ -69,11 +70,6 @@ const ServerBar = () => {
 					<FriendIcon />
 				</div>
 			</Tooltip>
-			<Tooltip title="Add Server" placement="right">
-				<div className="serverBlock" onClick={() => handleOpen()}>
-					<PlusIcon />
-				</div>
-			</Tooltip>
 
 			{serverList.map(s => <Tooltip title={s.name} placement="right" key={s.id as Key}>
 				<div className="serverBlock" onClick={() => {
@@ -83,6 +79,18 @@ const ServerBar = () => {
 					<h2>{title(s.name)}</h2>
 				</div>
 			</Tooltip>)}
+
+			<Tooltip title="Add Server" placement="right">
+				<div className="serverBlock" onClick={() => handleOpen()}>
+					<PlusIcon />
+				</div>
+			</Tooltip>
+
+			<Tooltip title="Explore servers" placement="right">
+				<div className="serverBlock" onClick={() => navigate("/dashboard/explore")}>
+					<ExploreIcon />
+				</div>
+			</Tooltip>
 
 			<Dialog 
 				open={open} 

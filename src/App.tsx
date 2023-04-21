@@ -13,6 +13,8 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import ServerParameters from "./components/ServerParameters/ServerParameters";
 import Chat from "./components/Chat/Chat";
 import Profile from "./pages/Profil/Profile";
+import UserServerRequest from "./components/UserServerRequest/UserServerRequest";
+import ServerRequest from "./components/ServerRequest/ServerRequest";
 
 import "./style.scss"
 import { FriendChat } from "./pages/FriendChat/FriendChat";
@@ -43,11 +45,14 @@ const App = () => {
               <Route path='/home' element={<Home />} />
               <Route path='/signin' element={<Signin />} />
               <Route path='/signup' element={<Signup />} />
-              <Route path='/me' element={<ProtectedRoute><Profile/></ProtectedRoute>} />
+              {/* <Route path='/me' element={<ProtectedRoute><Profile/></ProtectedRoute>} /> */}
               <Route path='/dashboard' element={<ProtectedRoute><Dashboard/></ProtectedRoute>}>
                 <Route index element={<ServerParameters />}/>
-                <Route path='/dashboard/chat' element={<Chat />}/>
+                <Route path='/dashboard/me' element={<Profile/>}/>
                 <Route path='/dashboard/friends' element={<FriendChat />}/>
+                <Route path='/dashboard/explore' element={<UserServerRequest />}/>
+                <Route path='/dashboard/chat' element={<Chat />}/>
+                <Route path='/dashboard/userRequests' element={<ServerRequest />}/>
               </Route>
             </Routes>
           </Router>
