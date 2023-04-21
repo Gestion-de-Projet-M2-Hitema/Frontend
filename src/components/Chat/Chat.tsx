@@ -1,10 +1,13 @@
-import { useState, useEffect, Key } from "react";
+import { useState, useEffect, Key, useCallback, useRef } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from "../../stores/store";
 import { useNavigate, Outlet } from "react-router-dom";
 import { postUpdateChannel, postDeleteChannel, resetUpdateChannelStatus, resetDeleteChannelStatus, Channel } from "../../stores/channelStore";
 import { Tooltip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Button, Snackbar, Alert } from "@mui/material";
 import "./style.scss"
+import { ChatMessage } from "../../stores/chatStore";
+import { socket } from "../../socket";
+import Cookies from "js-cookie";
 
 const Chat = () => {
 	const navigate = useNavigate()
@@ -21,18 +24,9 @@ const Chat = () => {
 	const [openDelete, setOpenDelete] = useState(false)
 	const [openErrorAlert, setOpenErrorAlert] = useState(false)
 
-	// Temporary, should be moved to the chat store
-	interface ChatMessage {
-		id: string,
-		content: string,
-		image: string | null,
-		user: string,
-		date: string,
-	}
+	const inputMessage = useRef<any>(null)
 
-	const [fakeMessages, setFakeMessages] = useState<ChatMessage[]>([
-		
-	])
+	const [messageHistory, setMessageHistory] = useState<ChatMessage[]>([])
 
 	const handleOpen = () => {
 		setName(channel.name)
@@ -59,6 +53,17 @@ const Chat = () => {
 	}
 
 	const handleCloseAlert = () => setOpenErrorAlert(false)
+
+	const handleSendMessage = (e: any) => {
+		if (e.code != "Enter") return
+		socket.emit(`send-message`, {
+			token: Cookies.get("jwt") || "",
+			content: e.target.value,
+			id: channelId
+		}, (e: any) => {
+			console.log(e)
+		});
+	}
 
 	useEffect(() => {
 		if(statusChannelUpdate == "fulfilled"){
@@ -90,7 +95,21 @@ const Chat = () => {
 		let ci = channelList.findIndex(e => e.id == channelId)
 		if(ci >= 0) setChannel(channelList[ci])
 	}, [channelList, channelId])
-    
+
+	useEffect(() => {
+		const onAllMessages = (data: any) => setMessageHistory([...data].reverse())
+		const onNewMessage = (data: any) => setMessageHistory((prev: ChatMessage[]) => [...prev, data])
+
+		socket.on("join-channel", onAllMessages)
+		socket.on("new-message", onNewMessage)
+		socket.emit("join-channel", {token: Cookies.get("jwt") || "", id: channelId})
+	
+		return () => {
+			socket.off("join-channel", onAllMessages)
+			socket.off("new-message", onNewMessage)
+		};
+	}, [])
+
 	return (
 		<div className="Chat">
 			{/* CHANNEL INFO / ACTIONS */}
@@ -159,9 +178,9 @@ const Chat = () => {
 
 	  <div className="chat-zone">
 		<div className="chat-message-list">
-			{fakeMessages.length > 0 && fakeMessages.map((message: ChatMessage) => (
+			{messageHistory.length > 0 && messageHistory.map((message: ChatMessage) => (
 				<div className="chat-message-element">
-					<div className="chat-message-author"><span>{message.user}</span> said at {message.date}</div>
+					<div className="chat-message-author"><span>{message.user.username}</span> said at {message.date}</div>
 					<div className="chat-message-content">{message.content}</div>
 					{message.image && (
 						<img src={message.image} alt="user sent image" />
@@ -170,7 +189,7 @@ const Chat = () => {
 			))}
 		</div>
 		<div className="chat-input">
-			<TextField placeholder="Message" label="Write your message here" variant="filled" fullWidth color="secondary" focused />
+			<TextField placeholder="Message" label="Write your message here" variant="filled" onKeyUp={handleSendMessage} fullWidth color="secondary" focused ref={inputMessage} />
 		</div>
 	  </div>
 

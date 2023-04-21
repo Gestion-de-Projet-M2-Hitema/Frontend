@@ -19,9 +19,12 @@ import ServerRequest from "./components/ServerRequest/ServerRequest";
 import "./style.scss"
 import { FriendChat } from "./pages/FriendChat/FriendChat";
 
+import { socket } from './socket';
+
 
 const App = () => {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  const [isConnected, setIsConnected] = useState(socket.connected);
   
   const changeTheme = () => {
     if(theme === "light"){
@@ -33,6 +36,32 @@ const App = () => {
       localStorage.setItem("theme", "light")
     }
   }
+
+  useEffect(() => {
+    const onConnect = () => {
+      setIsConnected(true);
+      console.log("socket io connected")
+    }
+
+    const onDisconnect = () => {
+      setIsConnected(false);
+      console.log("socket io disconnected")
+    }
+
+    const onNewMessage = (e: any) => {
+			console.log(e)
+		}
+
+    socket.on('connect', onConnect);
+    socket.on('disconnect', onDisconnect);
+		// socket.on('siu1i1wojo72f5m:new-message', onNewMessage);
+
+    return () => {
+      socket.off('connect', onConnect);
+      socket.off('disconnect', onDisconnect);
+		  // socket.off('siu1i1wojo72f5m:new-message', onNewMessage);
+    };
+  }, [])
 
   return (
     <div className="app" id={theme}>
