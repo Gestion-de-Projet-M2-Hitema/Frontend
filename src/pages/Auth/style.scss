@@ -56,14 +56,14 @@
 				padding: 10px 0px;
 				border: none;
 				border-radius: 2px;
-				background-color: var(--signin_submit_btn_bg_color);
+				background-color: var(--green_button);
 				color: var(--signin_submit_btn_color);
 
 				font-size: 12pt;
 			}
 
 			.submitButton:hover{
-				background-color: var(--signin_submit_btn_bg_color_hover);
+				background-color: var(--green_button_hover);
 			}
 
 			p {

@@ -6,9 +6,11 @@ body{
 	margin: 0;
 
 	--signin_submit_btn_color: white;
-	--signin_submit_btn_bg_color: #4f772d;
-	--signin_submit_btn_bg_color_hover: #5e8a37;
+	--green_button: #4f772d;
+	--green_button_hover: #5e8a37;
 	--auth_error_color: #d62828;
+	--red_button: #d62828;
+	--red_button_hover: #c93838;
 }
 
 #root {

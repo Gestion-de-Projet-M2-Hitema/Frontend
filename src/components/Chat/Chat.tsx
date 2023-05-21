@@ -1,13 +1,18 @@
 import { useState, useEffect, Key, useCallback, useRef } from "react";
+import { useNavigate, Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from "../../stores/store";
-import { useNavigate, Outlet } from "react-router-dom";
 import { postUpdateChannel, postDeleteChannel, resetUpdateChannelStatus, resetDeleteChannelStatus, Channel } from "../../stores/channelStore";
 import { Tooltip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Button, Snackbar, Alert } from "@mui/material";
-import "./style.scss"
 import { ChatMessage } from "../../stores/chatStore";
 import { socket } from "../../socket";
 import Cookies from "js-cookie";
+
+import PencilIcon from "../../assets/icons/PencilIcon";
+import TrashIcon from "../../assets/icons/TrashIcon";
+
+import "./style.scss"
+
 
 const Chat = () => {
 	const navigate = useNavigate()
@@ -55,6 +60,7 @@ const Chat = () => {
 	const handleCloseAlert = () => setOpenErrorAlert(false)
 
 	const handleSendMessage = (e: any) => {
+		console.log(e.code)
 		if (e.code != "Enter") return
 		socket.emit(`send-message`, {
 			token: Cookies.get("jwt") || "",
@@ -114,9 +120,15 @@ const Chat = () => {
 		<div className="Chat">
 			{/* CHANNEL INFO / ACTIONS */}
 			<div className="channel-info">
-				<div>{channel.name}</div>
-				<button onClick={handleOpen}>Update channel name</button>
-				<button onClick={() => setOpenDelete(true)}>Delete channel</button>
+				<h1>{channel.name}</h1>
+				<div className="iconContainer">
+					<div className="icon" onClick={handleOpen}>
+						<PencilIcon />
+					</div>
+					<div className="icon" onClick={() => setOpenDelete(true)}>
+						<TrashIcon />
+					</div>
+				</div>
 			</div>
 
 			<Dialog 

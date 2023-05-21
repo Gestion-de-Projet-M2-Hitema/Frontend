@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from "../../stores/store";
 
@@ -7,6 +8,7 @@ import SettingsIcon from "../../assets/icons/SettingsIcon";
 import './style.scss'
 
 const UserCard = () => {
+	const navigate = useNavigate()
 	const {avatar, username} = useSelector((state: RootState) => state.profile)
 	const [url, setUrl] = useState("")
 
@@ -22,7 +24,9 @@ const UserCard = () => {
 				<h1>{username}</h1>
 			</div>
 
-			<SettingsIcon/>
+			<div onClick={() => navigate("/dashboard/me")} className='icon'>
+				<SettingsIcon/>
+			</div>
 
 		</div>
 	)

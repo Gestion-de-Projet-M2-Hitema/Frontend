@@ -1,6 +1,10 @@
 #serverBar {
-	width: 100%;
-	height: 100%;
+	width: 25vh;
+	background-color: white;
+	border-radius: 20px;
+
+	box-shadow: 5px -5px 10px lightgrey;
+
 	overflow-y: auto;
 	padding-bottom: 10px;
 
@@ -8,36 +12,51 @@
 	flex-direction: column;
 	align-items: center;
 
-	#modalCreateServer {
-		background-color: var(--main_bg_color);
-	}
+	.item {
+		width: 90%;
+		height: 5vh;
 
-	.serverBlock {
-		height: 80px;
-		width: 80px;
-		display: grid;
-		align-content: center;
-		color: var(--usercard_setting_color);
-		border: solid 1px var(--usercard_setting_bg_color);
-		border-radius: 25%;
+		display: flex;
+		flex-direction: row;
+		justify-content: start;
+		align-items: center;
+		
+		margin: 5px 0px;
+		padding: 0px 5px;
 
-		margin-top: 10px;
+		border-radius: 10px;
 
-		h2 {
-			text-align: center;
-			cursor: pointer;
-		}
+		-webkit-user-select: none; /* Safari */
+		-ms-user-select: none; /* IE 10 and IE 11 */
+		user-select: none;
 
 		svg {
-			width: 50%;
-			margin-left: 20px;
+			max-width: calc(25px + 0.5vw);
+			margin: 0px 10px;
+		}
+
+		h2 {
+			font-size: calc(11px + 0.3vw);
+			margin-left: 10px;
 		}
 	}
 
-	.serverBlock:hover {
+	.item:first-child {
+		margin-top: 10px;
+	}
+
+	.item:hover {
+		color: #1982c4;
+		background-color: #f7f0ee;
 		cursor: pointer;
-		color: var(--main_text_color);
-		background-color: var(--usercard_setting_bg_color);
+	}
+
+	.active {
+		color: #1982c4;
+	}
+
+	#modalCreateServer {
+		background-color: var(--main_bg_color);
 	}
 	
 }

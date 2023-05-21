@@ -1,6 +1,6 @@
 import ServerBar from "../../components/ServerBar/ServerBar"
 import { useEffect } from "react";
-import { useNavigate, Outlet, useLocation } from "react-router-dom";
+import {  Outlet, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from "../../stores/store";
 import { getMe } from "../../stores/profileStore"
@@ -12,7 +12,6 @@ import "./style.scss"
 import FriendNavigation from "../../components/FriendNavigation/FriendNavigation";
 
 const Dashboard = () => {
-	const navigate = useNavigate()
 	const dispatch = useDispatch<AppDispatch>();
 	const {serverList, serverId} = useSelector((state: RootState) => state.server)
 	const location = useLocation()
@@ -26,17 +25,23 @@ const Dashboard = () => {
 
 	return (
 		<div id="dashboard">
-			<div id="servers">
-				<ServerBar />
-			</div>
-			<div id="infos">
-				{isFriendsPage && <FriendNavigation />}
-				{(isExplorePage || isMePage) && <div> </div>}
-				{(!isFriendsPage && !isExplorePage && !isMePage) && <ServerNavigation />}
-				<UserCard />
-			</div>
+			<ServerBar />
 
-			{(isFriendsPage || isExplorePage || serverId != '') && <Outlet />}
+			<div className="renderView">
+
+				<div className="innerNavigation">
+					{(isFriendsPage || isExplorePage) && <FriendNavigation />}
+					{(isExplorePage || isMePage) && <div> </div>}
+					{(!isFriendsPage && !isExplorePage && !isMePage) && <ServerNavigation />}
+					<UserCard /> 
+				</div>
+
+				<div className="renderComponent">
+					{(isFriendsPage || isExplorePage || serverId != '') && <Outlet />}
+				</div>
+
+				
+			</div>
 			
 		</div>
 	)

@@ -6,6 +6,11 @@ import { getListChannel, postCreateChannel, resetCreateChannelStatus, setChannel
 import { useNavigate, Outlet } from "react-router-dom";
 import { Tooltip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Button } from "@mui/material";
 
+import SettingsIcon from "../../assets/icons/SettingsIcon";
+import RequestIcon from "../../assets/icons/RequestIcon";
+import PlusIcon from "../../assets/icons/PlusIcon";
+import ChannelIcon from "../../assets/icons/ChannelIcon";
+
 import "./style.scss"
 
 const ServerNavigation = () => {
@@ -19,6 +24,7 @@ const ServerNavigation = () => {
 	const [name, setName] = useState("")
 	const [isError, setIsError] = useState(false)
 	const [errorText, setErrorText] = useState("")
+	const [selected, setSelected] = useState("")
 
   const handleOpen = () => {
 		setIsError(false)
@@ -58,6 +64,7 @@ const ServerNavigation = () => {
 	}, [statusChannelCreate])
 
 	useEffect(() => {
+		setSelected("")
 		let si = serverList.findIndex(e => e.id == serverId)
 		if(si >= 0) setServer(serverList[si])
 		if(serverId.length) dispatch(getListChannel(serverId))
@@ -67,17 +74,46 @@ const ServerNavigation = () => {
 		<div id="serverNavigation">
 			{serverId && <>
 				<h1>{server.name}</h1>
-				<button onClick={() => {navigate("/dashboard")}}>Params</button>
-				<br/>
-				<button onClick={() => {navigate("/dashboard/userRequests")}}>Request</button>
-				<br/>
-				<button onClick={handleOpen}>Create channel</button>
+
+				<div className={`item ${selected == 'serverParameters' && 'active'}`} onClick={() => {
+						setSelected('serverParameters')
+						navigate("/dashboard/serverParameters")
+					}}>
+					<SettingsIcon />
+					<h3>Parameters</h3>
+				</div>
+
+				<div className={`item ${selected == 'userRequests' && 'active'}`} onClick={() => {
+						setSelected('userRequests')
+						navigate("/dashboard/userRequests")
+					}}>
+					<RequestIcon />
+					<h3>Request</h3>
+				</div>
+
+				<div className={`item ${selected == 'newChannel' && 'active'}`} onClick={() => {
+						setSelected('newChannel')
+						handleOpen()
+					}}>
+					<PlusIcon />
+					<h3>New channel</h3>
+				</div>
+
 				
-				<ul>
-					{channelList.map(e => <li key={e.id}>
-						<button onClick={() => handleChannelSelection(e.id as string)}>{e.name}</button>
-					</li>)}
-				</ul>
+				<div className="channels">
+					<h3>Channels</h3>
+					{channelList.map(e => {
+						return (
+							<div key={e.id} className={`itemChannel ${selected == 'channel-' + e.id && 'channelActive'}`}  onClick={() => {
+								setSelected("channel-" + e.id)
+								handleChannelSelection(e.id as string)
+							}}>
+								<ChannelIcon />
+								<h4>{e.name}</h4>
+							</div>
+						)
+					})}
+				</div>
 
 				<Dialog 
 					open={open} 
@@ -85,6 +121,11 @@ const ServerNavigation = () => {
 					id="modalCreateChannel" 
 					fullWidth={true} 
 					maxWidth="xs"
+					// PaperProps={{
+					// 	style: {
+					// 		backgroundColor: 'black',
+					// 	},
+					// }}
 					>
 					<DialogTitle>Create channel</DialogTitle>
 					<DialogContent>

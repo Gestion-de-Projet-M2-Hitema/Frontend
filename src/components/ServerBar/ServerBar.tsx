@@ -9,6 +9,8 @@ import PlusIcon from "../../assets/icons/PlusIcon";
 import FriendIcon from "../../assets/icons/FriendIcon";
 import ExploreIcon from "../../assets/icons/ExploreIcon";
 
+import ServerIcon from "../../assets/icons/ServerIcon";
+
 import './style.scss'
 
 const ServerBar = () => {
@@ -20,6 +22,7 @@ const ServerBar = () => {
 	const [name, setName] = useState("")
 	const [isError, setIsError] = useState(false)
 	const [errorText, setErrorText] = useState("")
+	const [selected, setSelected] = useState("friends")
 
   const handleOpen = () => {
 		setIsError(false)
@@ -53,44 +56,50 @@ const ServerBar = () => {
 		}
 	}, [statusCreate])
 
-	const title = (name: String) => {
-		let matches = name.match(/\b(\w)/g); // ['J','S','O','N']
-		return (matches) ? matches.join('').toUpperCase().slice(0,4) : ""; // JSON
-	}
-
-
 	useEffect(() => {
 		dispatch(getList())
+		navigate("/dashboard/friends")
 	}, [])
     
 	return (
 		<div id="serverBar">
-			<Tooltip title="Friends" placement="right">
-				<div className="serverBlock" onClick={() => navigate("/dashboard/friends")}>
-					<FriendIcon />
-				</div>
-			</Tooltip>
 
-			{serverList.map(s => <Tooltip title={s.name} placement="right" key={s.id as Key}>
-				<div className="serverBlock" onClick={() => {
-					navigate("/dashboard")
-					dispatch(setServerId(s.id as string))
-				}}>
-					<h2>{title(s.name)}</h2>
-				</div>
-			</Tooltip>)}
+			<div className={`item ${selected == 'friends' && 'active'}`} onClick={() => {
+				setSelected("friends")
+				navigate("/dashboard/friends")
+			}}>
+				<FriendIcon />
+				<h2>Friends</h2>
+			</div>
 
-			<Tooltip title="Add Server" placement="right">
-				<div className="serverBlock" onClick={() => handleOpen()}>
-					<PlusIcon />
-				</div>
-			</Tooltip>
+			{serverList.map(s => {
+				return (
+					<div className={`item ${selected == s.id && 'active'}`} onClick={() => {
+						setSelected(s.id)
+						navigate("/dashboard")
+						dispatch(setServerId(s.id as string))
+					}}>
+						<ServerIcon />
+						<h2>{s.name}</h2>
+					</div>
+				)
+			})}
 
-			<Tooltip title="Explore servers" placement="right">
-				<div className="serverBlock" onClick={() => navigate("/dashboard/explore")}>
-					<ExploreIcon />
-				</div>
-			</Tooltip>
+			<div className={`item ${selected == 'newServer' && 'active'}`} onClick={() => {
+				setSelected("newServer")
+				handleOpen()
+			}}>
+				<PlusIcon />
+				<h2>New server</h2>
+			</div>
+
+			<div className={`item ${selected == 'exploreServers' && 'active'}`} onClick={() => {
+				setSelected("exploreServers")
+				navigate("/dashboard/explore")
+			}}>
+			<ExploreIcon />
+				<h2>Explore servers</h2>
+			</div>
 
 			<Dialog 
 				open={open} 

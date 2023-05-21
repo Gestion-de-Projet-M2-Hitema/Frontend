@@ -20,6 +20,11 @@ const ServerParameters = () => {
 	const [openDelete, setOpenDelete] = useState(false)
 	const [openErrorAlert, setOpenErrorAlert] = useState(false)
 
+	const formatDate = (date: string | number | Date) => {
+		let d = new Date(date)
+		return `${('0' + d.getDate()).slice(-2)}/${('0' + d.getMonth()).slice(-2)}/${d.getFullYear()}`
+	}
+
 
 	const handleOpen = () => {
 		setName(server.name)
@@ -74,31 +79,37 @@ const ServerParameters = () => {
 
 	useEffect(() => {
 		let si = serverList.findIndex(e => e.id == serverId)
-		if(si >= 0) setServer(serverList[si])	
+		if(si >= 0){
+			setServer(serverList[si])
+			setName(serverList[si].name)
+		} 	
 	}, [serverList, serverId])
     
 	return (
 		<div id="serverParameters">
 			<h1>Paramètre serveur</h1>
 
-			<button onClick={handleOpen}>Update server name</button>
+			<div className="container">
+				<div className="form">
+					<label >Server name</label>
+					<div className="formInput">
+						<input disabled type="text" value={server.name}/>
+						<div className="buttonUpdate" onClick={handleOpen}>Update server name</div>
+					</div>
+				</div>
 
-			<label >Server name</label>
-			<input readOnly type="text" value={server.name} />
+				<label htmlFor="email">Number of persons</label>
+				<input disabled type="text" name="email" value={server.members.length} />
 
-			<label htmlFor="email">Number of persons</label>
-			<input readOnly type="text" name="email" value={server.members.length} />
+				<label htmlFor="email">Created at</label>
+				<input disabled type="text" name="email" value={formatDate(server.created)} />
 
-			<label htmlFor="email">Created at</label>
-			<input readOnly type="text" name="email" value={server.created} />
+				<label htmlFor="email">Last modified at</label>
+				<input disabled type="text" name="email" value={formatDate(server.updated)} />
 
-			<label htmlFor="email">Last modified at</label>
-			<input readOnly type="text" name="email" value={server.updated} />
+				<div className="buttonDelete" onClick={() => setOpenDelete(true)}>Delete server</div>
 
-			<br />
-
-			<button onClick={() => setOpenDelete(true)}>Delete server</button>
-
+			</div>
 
 			<Dialog 
 				open={open} 

@@ -3,14 +3,11 @@
 	flex-direction: row;
 	height: 100%;
 
-	border-top: solid 1px var(--auth_form_border_color);
+	padding: 20px;
 
-	#servers {
-		width: 100px;
-		height: 100%;
-		// background-color: red;
-		border-right: solid 1px var(--auth_form_border_color);
-	}
+	justify-content: space-around;
+
+	background-color: #e8e8e4;
 
 	#infos {
 		display: flex;
@@ -18,5 +15,34 @@
 		justify-content: space-between;
 
 		border-right: solid 1px var(--auth_form_border_color);
+	}
+
+	.renderView {
+		width: calc(100% - 30vh);
+
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+
+		.innerNavigation {
+			width: 25vh;
+
+			box-shadow: 5px -5px 10px lightgrey;
+
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			
+			background-color: white;
+			border-radius: 20px 0px 0px 20px;
+		}
+
+		.renderComponent {
+			width: calc(100% - 25.5vh);
+			background-color: white;
+			border-radius: 0px 20px 20px 0px;
+
+			box-shadow: 5px -5px 10px lightgrey;
+		}
 	}
 }

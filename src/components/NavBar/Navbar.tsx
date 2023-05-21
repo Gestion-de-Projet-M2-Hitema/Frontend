@@ -4,6 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from "../../stores/store";
 import { logout } from "../../stores/authStore";
+import LogoutIcon from "../../assets/icons/LogoutIcon";
 import Cookies from 'js-cookie'
 
 import "./style.scss"
