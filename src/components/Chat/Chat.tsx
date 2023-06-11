@@ -3,7 +3,7 @@ import { useNavigate, Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from "../../stores/store";
 import { postUpdateChannel, postDeleteChannel, resetUpdateChannelStatus, resetDeleteChannelStatus, Channel } from "../../stores/channelStore";
-import { Tooltip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Button, Snackbar, Alert } from "@mui/material";
+import { Modal, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Button, Snackbar, Alert } from "@mui/material";
 import { ChatMessage } from "../../stores/chatStore";
 import { socket } from "../../socket";
 import Cookies from "js-cookie";
@@ -131,53 +131,61 @@ const Chat = () => {
 				</div>
 			</div>
 
-			<Dialog 
-				open={open} 
-				onClose={handleClose} 
+			<Modal
+				open={open}
+				onClose={() => handleClose()}
 				id="modalUpdateChannel" 
-				fullWidth={true} 
-				maxWidth="xs"
-				>
-        <DialogTitle>Update channel name</DialogTitle>
-        <DialogContent>
-          <TextField
-						autoFocus
-						error={isError}
-						helperText={errorText}
-            margin="dense"
-            id="name"
-            label="channel name"
-            type="text"
-            fullWidth
-            variant="outlined"
-						value={name}
-						onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-							setName(event.target.value);
-						}}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleUpdateChannel} disabled={name == channel.name}>Change channel name</Button>
-        </DialogActions>
-      </Dialog>
+			>
+				<div className="modal">
+					<h1>Update channel name</h1>
 
-			<Dialog 
-				open={openDelete} 
-				onClose={() => setOpenDelete(false)} 
+					<div className="modalBody">
+						<div className="modalContent">
+						<TextField
+						autoFocus
+							error={isError}
+							helperText={errorText}
+							margin="dense"
+							id="name"
+							label="channel name"
+							type="text"
+							fullWidth
+							variant="outlined"
+							value={name}
+							onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+								setName(event.target.value);
+							}}
+						/>
+						</div>
+
+						<div className="modalAction">
+							<div className="modalButton buttonCancel" onClick={handleClose}>Cancel</div>
+							<button className="modalButton buttonSubmit" onClick={handleUpdateChannel} disabled={name == channel.name}>Change channel name</button>
+						</div>
+					</div>
+				</div>
+			</Modal>
+
+			<Modal
+				open={openDelete}
+				onClose={() => setOpenDelete(false)}
 				id="modalDeleteServer" 
-				fullWidth={true} 
-				maxWidth="xs"
-				>
-        <DialogTitle>Delete channel ?</DialogTitle>
-        <DialogContent>
-          <DialogContentText>Are you sure you want to delete this channel ?</DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenDelete(false)}>Cancel</Button>
-          <Button onClick={handleDeleteChannel}>Delete</Button>
-        </DialogActions>
-      </Dialog>
+			>
+				<div className="modal">
+					<h1>Delete channel ?</h1>
+
+					<div className="modalBody">
+						<div className="modalContent">
+							<p>Are you sure you want to delete this channel ?</p>
+						</div>
+
+						<div className="modalAction">
+							<div className="modalButton buttonCancel" onClick={() => setOpenDelete(false)}>Cancel</div>
+							<button className="modalButton buttonSubmit" onClick={handleDeleteChannel} disabled={name == channel.name}>Delete</button>
+						</div>
+					</div>
+				</div>
+			</Modal>
 
 			<Snackbar open={openErrorAlert} onClose={handleCloseAlert} autoHideDuration={3000} anchorOrigin={{ vertical : "top", horizontal: "center" }}>
         <Alert severity="error" sx={{ width: '100%' }}>

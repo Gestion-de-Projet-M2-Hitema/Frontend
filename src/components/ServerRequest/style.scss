@@ -1,3 +1,75 @@
 #serverRequest {
-	margin-left: 30px;
+	width: 100%;
+
+	h1 {
+		font-size: calc(11px + 0.5vw);
+		margin: 25px;
+	}
+
+	.requestTable {
+		margin: 0px 20px;
+
+		table {
+			width: 100%;
+			
+			thead {
+				tr {
+					height: calc(38px + 0.4vh);
+				}
+			}
+
+			tbody {
+				tr {
+					height: calc(38px + 0.4vh);
+					font-size: calc(8px + 0.4vw);
+				}
+			}
+		}
+	}
+
+	.containerButton {
+		height: 100%;
+		display: flex;
+		flex-direction: row;
+		justify-content: end;
+		align-items: baseline;
+	}
+
+	.buttonAccept {
+		display: flex;
+		color: white;
+		align-items: center;
+		padding: 0px 10px;
+		margin-right: 10px;
+		border: none;
+		border-radius: 10px;
+		background-color: var(--green_button);
+		height: calc(30px + 0.4vh) ;
+		font-size: calc(6px + 0.4vw);
+	}
+
+	.buttonAccept:hover {
+		cursor: pointer;
+		background-color: var(--green_button_hover);
+	}
+
+	.buttonDecline {
+		display: flex;
+		align-items: center;
+		width: fit-content;
+		height: calc(30px + 0.4vh);
+		padding: 0px 10px;
+		color: white;
+		background-color: var(--red_button);
+		font-size: calc(6px + 0.4vw);
+		
+		border: none;
+		border-radius: 10px;
+	}
+
+	.buttonDecline:hover {
+		cursor: pointer;
+		background-color: var(--red_button_hover);
+	}
+
 }

@@ -7,7 +7,7 @@
 
 	justify-content: space-around;
 
-	background-color: #e8e8e4;
+	background-color: var(--dashboard_bg_color);
 
 	#infos {
 		display: flex;
@@ -24,17 +24,21 @@
 		flex-direction: row;
 		justify-content: space-between;
 
+		background-color: var(--main_bg_color);
+		border-radius: 0px 0px 0px 20px;
+
 		.innerNavigation {
 			width: 25vh;
 
-			box-shadow: 5px -5px 10px lightgrey;
+			box-shadow: 5px -5px 10px var(--dashboard_shadow_color);
 
 			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
 			
-			background-color: white;
 			border-radius: 20px 0px 0px 20px;
+
+			
 		}
 
 		.renderComponent {
@@ -42,7 +46,9 @@
 			background-color: white;
 			border-radius: 0px 20px 20px 0px;
 
-			box-shadow: 5px -5px 10px lightgrey;
+			background-color: var(--main_bg_color);
+
+			box-shadow: 5px -5px 10px var(--dashboard_shadow_color);
 		}
 	}
 }

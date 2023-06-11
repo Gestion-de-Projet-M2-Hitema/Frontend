@@ -1,8 +1,8 @@
-import { useState, useEffect, Key } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from "../../stores/store";
 import { getList, postCreateServer, resetCreateStatus, setServerId } from "../../stores/serverStore";
-import { Tooltip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Button } from "@mui/material";
+import { Modal, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 import PlusIcon from "../../assets/icons/PlusIcon";
@@ -74,7 +74,7 @@ const ServerBar = () => {
 
 			{serverList.map(s => {
 				return (
-					<div className={`item ${selected == s.id && 'active'}`} onClick={() => {
+					<div key={'server-' + s.id} className={`item ${selected == s.id && 'active'}`} onClick={() => {
 						setSelected(s.id)
 						navigate("/dashboard")
 						dispatch(setServerId(s.id as string))
@@ -101,36 +101,40 @@ const ServerBar = () => {
 				<h2>Explore servers</h2>
 			</div>
 
-			<Dialog 
-				open={open} 
-				onClose={handleClose} 
-				id="modalCreateServer" 
-				fullWidth={true} 
-				maxWidth="xs"
-				>
-        <DialogTitle>Create Server</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-						error={isError}
-						helperText={errorText}
-            margin="dense"
-            id="name"
-            label="Server name"
-            type="text"
-            fullWidth
-            variant="outlined"
-						value={name}
-						onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-							setName(event.target.value);
-						}}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleCreateServer}>Create server</Button>
-        </DialogActions>
-      </Dialog>
+			<Modal
+				open={open}
+				onClose={() => handleClose()}
+			>
+				<div className="modal">
+					<h1>Create Server</h1>
+
+					<div className="modalBody">
+						<div className="modalContent">
+							<TextField
+								autoFocus
+								error={isError}
+								helperText={errorText}
+								margin="dense"
+								id="name"
+								label="Server name"
+								type="text"
+								fullWidth
+								variant="outlined"
+								value={name}
+								onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+									setName(event.target.value);
+								}}
+							/>
+						</div>
+
+						<div className="modalAction">
+							<div className="modalButton buttonCancel" onClick={handleClose}>Cancel</div>
+							<div className="modalButton buttonSubmit" onClick={handleCreateServer}>Create server</div>
+						</div>
+					</div>
+				</div>
+			</Modal>
+
 
 		</div>
 	)

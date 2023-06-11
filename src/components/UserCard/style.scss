@@ -2,11 +2,14 @@
 	width: 100%;
 	height: 60px;
 
-	border-top: solid 5px #e8e8e4;
+	border-top: solid 5px var(--dashboard_bg_color);
 
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
+
+	background-color: var(--main_bg_color);
+	border-radius: 0px 0px 0px 20px;
 
 	.left {
 		display: flex;

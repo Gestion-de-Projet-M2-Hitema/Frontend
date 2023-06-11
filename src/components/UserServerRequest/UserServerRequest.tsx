@@ -60,32 +60,31 @@ const UserServerRequest = () => {
 		<div id="userServerRequest">
 			<h1>Explore all servers</h1>
 
-			<Table aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Server</TableCell>
-            <TableCell align="right">Request</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {list.map((row) => (
-            <TableRow
-              key={row.id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              {row.invitationSend && <TableCell align="right">
-								waiting
-							</TableCell> }
-              {!row.invitationSend && <TableCell align="right">
-								<button onClick={() => handleCreateSr(row.id)}>Request Access</button>
-							</TableCell> }
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+			<div className="requestTable">
+				<table>
+					<thead>
+						<tr>
+							<th align="left">Server</th>
+							<th align="right">Request</th>
+						</tr>
+					</thead>
+					<tbody>
+						{list.map((row) => (
+							<tr	key={row.id} className="tableRow">
+								<td>
+									{row.name}
+								</td>
+									{row.invitationSend && <td className="containerButton" align="right">
+										<div className="buttonDecline">Waiting</div>
+									</td> }
+									{!row.invitationSend && <td className="containerButton" align="right">
+										<div className="buttonAccept" onClick={() => handleCreateSr(row.id)}>Request Access</div>
+									</td> }
+							</tr>
+						))}
+					</tbody>
+				</table>
+			</div>
 
 			<br />
 

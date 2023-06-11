@@ -29,6 +29,9 @@ body{
 	--auth_label_color : grey;
 	--usercard_setting_color: #495057;
 	--usercard_setting_bg_color: #daddd8;
+	--dashboard_bg_color: #e8e8e4;
+	--dashboard_shadow_color: #d3d3d3;
+	--hover-color: #f7f0ee;
 }
 
 #dark {
@@ -41,6 +44,9 @@ body{
 	--auth_label_color : rgb(216, 204, 204);
 	--usercard_setting_color: #ced4da;
 	--usercard_setting_bg_color: #3a3f45;
+	--dashboard_bg_color: #373E45;
+	--dashboard_shadow_color: #4b4d4e;
+	--hover-color: #3d3f42 ;
 }
 
 .app {
@@ -77,3 +83,82 @@ body{
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
 	background-color: #555;
 }
+
+.modal {
+	position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+	min-width: 450px;
+
+	border-radius: 5px;
+
+	padding: 15px 20px;
+
+	font-family: "Roboto", sans-serif !important;
+	background-color: white;
+	
+	h1 {
+		margin: 0;
+		font-size: calc(14px + 0.5vw);
+		font-weight: 500;
+		margin-bottom: 10px;
+	}
+
+	.modalBody {
+		height: 90%;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+
+		.modalContent {
+			flex-grow: 4;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+		}
+
+		.modalAction {
+			display: flex;
+			flex-direction: row;
+			justify-content: end;
+			margin-bottom: 5px;
+			margin-top: 5px;
+
+			.modalButton {
+				display: flex;
+				color: white;
+				align-items: center;
+				margin-left: 20px;
+				padding: 0px 10px;
+				height: calc(30px + 0.4vh) ;
+				font-size: calc(10px + 0.4vw);
+				font-weight: 400;
+				background-color: white;
+				border: none;
+			}
+
+			.buttonCancel {
+				color: var(--red_button);
+			}
+
+			.buttonCancel:hover {
+				cursor: pointer;
+				color: var(--red_button_hover);
+			}
+
+			.buttonSubmit {
+				color: var(--green_button);
+			}
+
+			.buttonSubmit:hover {
+				cursor: pointer;
+				color: var(--green_button_hover);
+			}
+		}
+	}
+
+}
+
+

@@ -1,8 +1,8 @@
-import { useState, useEffect, Key } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from "../../stores/store";
-import { getList, postUpdateServer, postDeleteServer, resetUpdateStatus, resetDeleteStatus, Server } from "../../stores/serverStore";
-import { Tooltip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Button, Snackbar, Alert } from "@mui/material";
+import { postUpdateServer, postDeleteServer, resetUpdateStatus, resetDeleteStatus, Server } from "../../stores/serverStore";
+import { Modal, TextField, Snackbar, Alert } from "@mui/material";
 
 import './style.scss'
 
@@ -111,16 +111,36 @@ const ServerParameters = () => {
 
 			</div>
 
-			<Dialog 
-				open={open} 
-				onClose={handleClose} 
-				id="modalUpdateServer" 
-				fullWidth={true} 
-				maxWidth="xs"
-				>
-        <DialogTitle>Update server name</DialogTitle>
-        <DialogContent>
-          <TextField
+			<Modal
+				open={openDelete}
+				onClose={() => setOpenDelete(false)}
+			>
+				<div className="modal">
+					<h1>Delete server ?</h1>
+
+					<div className="modalBody">
+						<div className="modalContent">
+							<p>Are you sure you want to delete this server ?</p>
+						</div>
+
+						<div className="modalAction">
+							<div className="modalButton buttonCancel" onClick={() => setOpenDelete(false)}>Cancel</div>
+							<div className="modalButton buttonSubmit" onClick={handleDeleteServer}>Delete</div>
+						</div>
+					</div>
+				</div>
+			</Modal>
+
+			<Modal
+				open={open}
+				onClose={() => handleClose()}
+			>
+				<div className="modal">
+					<h1>Update server name</h1>
+
+					<div className="modalBody">
+						<div className="modalContent">
+						<TextField
 						autoFocus
 						error={isError}
 						helperText={errorText}
@@ -135,29 +155,16 @@ const ServerParameters = () => {
 							setName(event.target.value);
 						}}
           />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleUpdateServer} disabled={name == server.name}>Change server name</Button>
-        </DialogActions>
-      </Dialog>
+						</div>
 
-			<Dialog 
-				open={openDelete} 
-				onClose={() => setOpenDelete(false)} 
-				id="modalDeleteServer" 
-				fullWidth={true} 
-				maxWidth="xs"
-				>
-        <DialogTitle>Delete server ?</DialogTitle>
-        <DialogContent>
-          <DialogContentText>Are you sure you want to delete this server ?</DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenDelete(false)}>Cancel</Button>
-          <Button onClick={handleDeleteServer}>Delete</Button>
-        </DialogActions>
-      </Dialog>
+						<div className="modalAction">
+							<div className="modalButton buttonCancel" onClick={handleClose}>Cancel</div>
+							<div className="modalButton buttonSubmit" onClick={handleUpdateServer}>Change server name</div>
+						</div>
+					</div>
+				</div>
+			</Modal>
+
 
 			<Snackbar open={openErrorAlert} onClose={handleCloseAlert} autoHideDuration={3000} anchorOrigin={{ vertical : "top", horizontal: "center" }}>
         <Alert severity="error" sx={{ width: '100%' }}>

@@ -2,7 +2,6 @@ import { useState, useEffect, Key } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from "../../stores/store";
 import { getListSrForServer, postAcceptSr, postDeclineSr, Sr } from "../../stores/ServerRequestStore";
-import { Snackbar, Alert, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 
 import './style.scss'
 
@@ -48,30 +47,31 @@ const ServerRequest = () => {
 		<div id="serverRequest">
 			<h1>User requests</h1>
 
-			<Table aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>User</TableCell>
-            <TableCell align="right">Actions</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-           {srServerList.items.map((row) => (
-            <TableRow
-              key={row.id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-             	<TableCell component="th" scope="row">
-                {row.from}
-              </TableCell>
-              <TableCell align="right">
-								<button onClick={() => handlerAcceptSr(row.id)}>Accept</button>
-								<button onClick={() => handlerDeclineSr(row.id)}>Decline</button>
-							</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+
+			<div className="requestTable">
+				<table>
+					<thead>
+						<tr>
+							<th align="left">User</th>
+							<th align="right">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{srServerList.items.map((row) => (
+							<tr	key={row.id} className="tableRow">
+								<td>
+									{row.from}
+								</td>
+								<td className="containerButton" align="right">
+									<div className="buttonAccept" onClick={() => handlerAcceptSr(row.id)}>Accept</div>
+									<div className="buttonDecline" onClick={() => handlerDeclineSr(row.id)}>Decline</div>
+								</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			</div>
+			
 
 			<br />
 
