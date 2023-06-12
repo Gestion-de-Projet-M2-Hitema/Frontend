@@ -17,8 +17,8 @@ const ServerParameters = () => {
 	const [mainTextColor, setmainTextColor] = useState('')
 
 	useEffect(() => {
-		let c = getComputedStyle(document.getElementById(themes.theme)).getPropertyValue('--main_bg_color')
-		let ct = getComputedStyle(document.getElementById(themes.theme)).getPropertyValue('--main_text_color')
+		let c = getComputedStyle(document.getElementById(themes.theme)!).getPropertyValue('--main_bg_color')
+		let ct = getComputedStyle(document.getElementById(themes.theme)!).getPropertyValue('--main_text_color')
 		setmainBgColor(c)
 		setmainTextColor(ct)
 	}, [themes.theme])
