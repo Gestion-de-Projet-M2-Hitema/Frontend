@@ -46,6 +46,8 @@ const Chat = () => {
 	const inputMessage = useRef<any>(null)
 	const [inputMessageState, setInputMessageState] = useState("")
 
+	const messageList = useRef<any>(null)
+
 	const [messageHistory, setMessageHistory] = useState<ChatMessage[]>([])
 
 	const handleOpen = () => {
@@ -84,6 +86,14 @@ const Chat = () => {
 		});
 		setInputMessageState("")
 	}
+
+	const handleScrollToBottom = () => {
+		if (messageList) messageList.current.scrollTop = messageList.current.scrollHeight
+	}
+
+	useEffect(() => {
+		handleScrollToBottom()
+	})	
 
 	useEffect(() => {
 		if(statusChannelUpdate == "fulfilled"){
@@ -211,7 +221,7 @@ const Chat = () => {
 	  {/* CHAT PAGE */}
 
 	  <div className="chat-zone">
-		<div className="chat-message-list">
+		<div className="chat-message-list" ref={messageList}>
 			{messageHistory.length > 0 && messageHistory.map((message: ChatMessage) => (
 				<div className="chat-message-element">
 					<div className="chat-message-author"><span>{message.user.username}</span> said at {message.date}</div>
