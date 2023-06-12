@@ -80,6 +80,7 @@ const Chat = () => {
 	const handleCloseAlert = () => setOpenErrorAlert(false)
 
 	const handleSendMessage = () => {
+		if (inputMessageState == "") return
 		socket.emit(`send-message`, {
 			token: Cookies.get("jwt") || "",
 			content: inputMessageState,
