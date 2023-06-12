@@ -9,6 +9,7 @@ import { ChatMessage } from "../../stores/chatStore";
 import { socket } from "../../socket";
 import Cookies from "js-cookie";
 import SendIcon from '@mui/icons-material/Send';
+import ImageIcon from '@mui/icons-material/Image';
 
 import PencilIcon from "../../assets/icons/PencilIcon";
 import TrashIcon from "../../assets/icons/TrashIcon";
@@ -45,6 +46,8 @@ const Chat = () => {
 
 	const inputMessage = useRef<any>(null)
 	const [inputMessageState, setInputMessageState] = useState("")
+	const [image, setImage] = useState(null)
+	const imageInputRef = useRef<any>(null)
 
 	const messageList = useRef<any>(null)
 
@@ -80,11 +83,17 @@ const Chat = () => {
 		socket.emit(`send-message`, {
 			token: Cookies.get("jwt") || "",
 			content: inputMessageState,
-			id: channelId
+			id: channelId,
+			...(image ? {image} : {})
 		}, (e: any) => {
 			console.log(e)
 		});
 		setInputMessageState("")
+		setImage(null)
+	}
+
+	const handleAddImage = (e: any) => {
+		setImage(e.target.files[0])
 	}
 
 	const handleScrollToBottom = () => {
@@ -233,6 +242,10 @@ const Chat = () => {
 			))}
 		</div>
 		<div className="chat-input">
+			<input type="file" name="image" id="image" accept="image/*" style={{display: "none"}} onChange={handleAddImage} ref={imageInputRef} />
+			{image && (
+				<img src={URL.createObjectURL(image)} width={100} alt="image" />
+			)}
 			<TextField
 				placeholder="Message"
 				label="Write your message here"
@@ -245,8 +258,9 @@ const Chat = () => {
 				value={inputMessageState}
 				onChange={(e: any) => setInputMessageState(e.target.value)}
 				InputProps={{
-					endAdornment: <InputAdornment position="end" onClick={handleSendMessage}>
-						<SendIcon sx={{cursor: "pointer"}} />
+					endAdornment: <InputAdornment position="end">
+						<SendIcon sx={{cursor: "pointer"}} onClick={handleSendMessage} />
+						<ImageIcon sx={{cursor: "pointer"}} onClick={() => imageInputRef?.current.click()} />
 					</InputAdornment>
 				}}
 			/>
