@@ -4,10 +4,11 @@ import { useNavigate, Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from "../../stores/store";
 import { postUpdateChannel, postDeleteChannel, resetUpdateChannelStatus, resetDeleteChannelStatus, Channel } from "../../stores/channelStore";
-import { Modal, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Button, Snackbar, Alert } from "@mui/material";
+import { Modal, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Button, Snackbar, Alert, InputAdornment } from "@mui/material";
 import { ChatMessage } from "../../stores/chatStore";
 import { socket } from "../../socket";
 import Cookies from "js-cookie";
+import SendIcon from '@mui/icons-material/Send';
 
 import PencilIcon from "../../assets/icons/PencilIcon";
 import TrashIcon from "../../assets/icons/TrashIcon";
@@ -28,8 +29,8 @@ const Chat = () => {
 	const [mainTextColor, setmainTextColor] = useState('')
 
 	useEffect(() => {
-		let c = getComputedStyle(document.getElementById(themes.theme)).getPropertyValue('--main_bg_color')
-		let ct = getComputedStyle(document.getElementById(themes.theme)).getPropertyValue('--main_text_color')
+		let c = getComputedStyle(document.getElementById(themes.theme)!).getPropertyValue('--main_bg_color')
+		let ct = getComputedStyle(document.getElementById(themes.theme)!).getPropertyValue('--main_text_color')
 		setmainBgColor(c)
 		setmainTextColor(ct)
 	}, [themes.theme])
@@ -43,6 +44,7 @@ const Chat = () => {
 	const [openErrorAlert, setOpenErrorAlert] = useState(false)
 
 	const inputMessage = useRef<any>(null)
+	const [inputMessageState, setInputMessageState] = useState("")
 
 	const [messageHistory, setMessageHistory] = useState<ChatMessage[]>([])
 
@@ -72,15 +74,15 @@ const Chat = () => {
 
 	const handleCloseAlert = () => setOpenErrorAlert(false)
 
-	const handleSendMessage = (e: any) => {
-		if (e.code != "Enter") return
+	const handleSendMessage = () => {
 		socket.emit(`send-message`, {
 			token: Cookies.get("jwt") || "",
-			content: e.target.value,
+			content: inputMessageState,
 			id: channelId
 		}, (e: any) => {
 			console.log(e)
 		});
+		setInputMessageState("")
 	}
 
 	useEffect(() => {
@@ -221,7 +223,23 @@ const Chat = () => {
 			))}
 		</div>
 		<div className="chat-input">
-			<TextField placeholder="Message" label="Write your message here" variant="filled" onKeyUp={handleSendMessage} fullWidth color="secondary" focused ref={inputMessage} />
+			<TextField
+				placeholder="Message"
+				label="Write your message here"
+				variant="filled"
+				onKeyUp={(e: any) => e.code == "Enter" && handleSendMessage()}
+				fullWidth
+				color="secondary"
+				focused
+				ref={inputMessage}
+				value={inputMessageState}
+				onChange={(e: any) => setInputMessageState(e.target.value)}
+				InputProps={{
+					endAdornment: <InputAdornment position="end" onClick={handleSendMessage}>
+						<SendIcon sx={{cursor: "pointer"}} />
+					</InputAdornment>
+				}}
+			/>
 		</div>
 	  </div>
 
