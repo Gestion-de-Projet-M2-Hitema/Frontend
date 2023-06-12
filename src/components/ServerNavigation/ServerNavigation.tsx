@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { ThemeContext } from "../../context/theme.context";
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from "../../stores/store";
 import { Server } from "../../stores/serverStore";
 import { getListChannel, postCreateChannel, resetCreateChannelStatus, setChannelId } from "../../stores/channelStore";
-import { useNavigate, Outlet } from "react-router-dom";
-import { Tooltip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { Modal, TextField } from "@mui/material";
 
 import SettingsIcon from "../../assets/icons/SettingsIcon";
 import RequestIcon from "../../assets/icons/RequestIcon";
@@ -25,6 +26,18 @@ const ServerNavigation = () => {
 	const [isError, setIsError] = useState(false)
 	const [errorText, setErrorText] = useState("")
 	const [selected, setSelected] = useState("")
+
+	const themes = useContext(ThemeContext);
+
+	const [mainBgColor, setmainBgColor] = useState('')
+	const [mainTextColor, setmainTextColor] = useState('')
+
+	useEffect(() => {
+		let c = getComputedStyle(document.getElementById(themes.theme)).getPropertyValue('--main_bg_color')
+		let ct = getComputedStyle(document.getElementById(themes.theme)).getPropertyValue('--main_text_color')
+		setmainBgColor(c)
+		setmainTextColor(ct)
+	}, [themes.theme])
 
   const handleOpen = () => {
 		setIsError(false)
@@ -115,41 +128,40 @@ const ServerNavigation = () => {
 					})}
 				</div>
 
-				<Dialog 
-					open={open} 
-					onClose={handleClose} 
+				<Modal
+					open={open}
+					onClose={() => handleClose()}
 					id="modalCreateChannel" 
-					fullWidth={true} 
-					maxWidth="xs"
-					// PaperProps={{
-					// 	style: {
-					// 		backgroundColor: 'black',
-					// 	},
-					// }}
-					>
-					<DialogTitle>Create channel</DialogTitle>
-					<DialogContent>
-						<TextField
-							autoFocus
-							error={isError}
-							helperText={errorText}
-							margin="dense"
-							id="name"
-							label="Channel name"
-							type="text"
-							fullWidth
-							variant="outlined"
-							value={name}
-							onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-								setName(event.target.value);
-							}}
-						/>
-					</DialogContent>
-					<DialogActions>
-						<Button onClick={handleClose}>Cancel</Button>
-						<Button onClick={handleCreateChannel}>Create channel</Button>
-					</DialogActions>
-				</Dialog>
+				>
+					<div className="modal" style={{ backgroundColor: mainBgColor, borderColor: mainBgColor, color: mainTextColor }}>
+						<h1>Create channel</h1>
+
+						<div className="modalBody">
+							<div className="modalContent">
+								<TextField
+									autoFocus
+									error={isError}
+									helperText={errorText}
+									margin="dense"
+									id="name"
+									label="Channel name"
+									type="text"
+									fullWidth
+									variant="outlined"
+									value={name}
+									onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+										setName(event.target.value);
+									}}
+								/>
+							</div>
+
+							<div className="modalAction">
+								<div className="modalButton buttonCancel" style={{ backgroundColor: mainBgColor }} onClick={handleClose}>Cancel</div>
+								<div className="modalButton buttonSubmit" style={{ backgroundColor: mainBgColor }} onClick={handleCreateChannel}>Create channel</div>
+							</div>
+						</div>
+					</div>
+				</Modal>
 
 			</>}
 			

@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { ThemeContext } from "../../context/theme.context";
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from "../../stores/store";
 import { getList, postCreateServer, resetCreateStatus, setServerId } from "../../stores/serverStore";
@@ -23,6 +24,18 @@ const ServerBar = () => {
 	const [isError, setIsError] = useState(false)
 	const [errorText, setErrorText] = useState("")
 	const [selected, setSelected] = useState("friends")
+
+	const themes = useContext(ThemeContext);
+
+	const [mainBgColor, setmainBgColor] = useState('')
+	const [mainTextColor, setmainTextColor] = useState('')
+
+	useEffect(() => {
+		let c = getComputedStyle(document.getElementById(themes.theme)).getPropertyValue('--main_bg_color')
+		let ct = getComputedStyle(document.getElementById(themes.theme)).getPropertyValue('--main_text_color')
+		setmainBgColor(c)
+		setmainTextColor(ct)
+	}, [themes.theme])
 
   const handleOpen = () => {
 		setIsError(false)
@@ -105,7 +118,7 @@ const ServerBar = () => {
 				open={open}
 				onClose={() => handleClose()}
 			>
-				<div className="modal">
+				<div className="modal" style={{ backgroundColor: mainBgColor, borderColor: mainBgColor, color: mainTextColor }}>
 					<h1>Create Server</h1>
 
 					<div className="modalBody">
@@ -128,8 +141,8 @@ const ServerBar = () => {
 						</div>
 
 						<div className="modalAction">
-							<div className="modalButton buttonCancel" onClick={handleClose}>Cancel</div>
-							<div className="modalButton buttonSubmit" onClick={handleCreateServer}>Create server</div>
+							<div className="modalButton buttonCancel" style={{ backgroundColor: mainBgColor }} onClick={handleClose}>Cancel</div>
+							<div className="modalButton buttonSubmit" style={{ backgroundColor: mainBgColor }} onClick={handleCreateServer}>Create server</div>
 						</div>
 					</div>
 				</div>

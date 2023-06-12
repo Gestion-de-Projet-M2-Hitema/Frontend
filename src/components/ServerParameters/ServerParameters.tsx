@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { ThemeContext } from "../../context/theme.context";
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from "../../stores/store";
 import { postUpdateServer, postDeleteServer, resetUpdateStatus, resetDeleteStatus, Server } from "../../stores/serverStore";
@@ -6,10 +7,22 @@ import { Modal, TextField, Snackbar, Alert } from "@mui/material";
 
 import './style.scss'
 
+
 const ServerParameters = () => {
 	const dispatch = useDispatch<AppDispatch>();
 	const {serverList, serverId, statusUpdate, statusDelete, error} = useSelector((state: RootState) => state.server)
+	const themes = useContext(ThemeContext);
 
+	const [mainBgColor, setmainBgColor] = useState('')
+	const [mainTextColor, setmainTextColor] = useState('')
+
+	useEffect(() => {
+		let c = getComputedStyle(document.getElementById(themes.theme)).getPropertyValue('--main_bg_color')
+		let ct = getComputedStyle(document.getElementById(themes.theme)).getPropertyValue('--main_text_color')
+		setmainBgColor(c)
+		setmainTextColor(ct)
+	}, [themes.theme])
+	
 	const [server, setServer] = useState<Server>({id: '', name: '', members: [], created: '', updated: ''})
 
 	const [open, setOpen] = useState(false)
@@ -115,7 +128,7 @@ const ServerParameters = () => {
 				open={openDelete}
 				onClose={() => setOpenDelete(false)}
 			>
-				<div className="modal">
+				<div className="modal" style={{ backgroundColor: mainBgColor, borderColor: mainBgColor, color: mainTextColor }}> 
 					<h1>Delete server ?</h1>
 
 					<div className="modalBody">
@@ -124,8 +137,8 @@ const ServerParameters = () => {
 						</div>
 
 						<div className="modalAction">
-							<div className="modalButton buttonCancel" onClick={() => setOpenDelete(false)}>Cancel</div>
-							<div className="modalButton buttonSubmit" onClick={handleDeleteServer}>Delete</div>
+							<div className="modalButton buttonCancel" style={{ backgroundColor: mainBgColor }} onClick={() => setOpenDelete(false)}>Cancel</div>
+							<div className="modalButton buttonSubmit" style={{ backgroundColor: mainBgColor }} onClick={handleDeleteServer}>Delete</div>
 						</div>
 					</div>
 				</div>
@@ -135,7 +148,7 @@ const ServerParameters = () => {
 				open={open}
 				onClose={() => handleClose()}
 			>
-				<div className="modal">
+				<div className="modal" style={{ backgroundColor: mainBgColor, borderColor: mainBgColor, color: mainTextColor }}>
 					<h1>Update server name</h1>
 
 					<div className="modalBody">
@@ -158,8 +171,8 @@ const ServerParameters = () => {
 						</div>
 
 						<div className="modalAction">
-							<div className="modalButton buttonCancel" onClick={handleClose}>Cancel</div>
-							<div className="modalButton buttonSubmit" onClick={handleUpdateServer}>Change server name</div>
+							<div className="modalButton buttonCancel" style={{ backgroundColor: mainBgColor }} onClick={handleClose}>Cancel</div>
+							<div className="modalButton buttonSubmit" style={{ backgroundColor: mainBgColor }} onClick={handleUpdateServer}>Change server name</div>
 						</div>
 					</div>
 				</div>

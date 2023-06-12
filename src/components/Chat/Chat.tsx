@@ -1,4 +1,5 @@
-import { useState, useEffect, Key, useCallback, useRef } from "react";
+import { useState, useEffect, Key, useCallback, useRef, useContext } from "react";
+import { ThemeContext } from "../../context/theme.context";
 import { useNavigate, Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from "../../stores/store";
@@ -20,6 +21,18 @@ const Chat = () => {
 	const {channelList, channelId, statusChannelUpdate, statusChannelDelete, channelError} = useSelector((state: RootState) => state.channel)
 
 	const [channel, setChannel] = useState<Channel>({id: '', name: '', owner: '', server: '', avatar: '', created: '', updated: ''})
+
+	const themes = useContext(ThemeContext);
+
+	const [mainBgColor, setmainBgColor] = useState('')
+	const [mainTextColor, setmainTextColor] = useState('')
+
+	useEffect(() => {
+		let c = getComputedStyle(document.getElementById(themes.theme)).getPropertyValue('--main_bg_color')
+		let ct = getComputedStyle(document.getElementById(themes.theme)).getPropertyValue('--main_text_color')
+		setmainBgColor(c)
+		setmainTextColor(ct)
+	}, [themes.theme])
 
 	const [open, setOpen] = useState(false)
 	const [name, setName] = useState("")
@@ -60,7 +73,6 @@ const Chat = () => {
 	const handleCloseAlert = () => setOpenErrorAlert(false)
 
 	const handleSendMessage = (e: any) => {
-		console.log(e.code)
 		if (e.code != "Enter") return
 		socket.emit(`send-message`, {
 			token: Cookies.get("jwt") || "",
@@ -136,7 +148,7 @@ const Chat = () => {
 				onClose={() => handleClose()}
 				id="modalUpdateChannel" 
 			>
-				<div className="modal">
+				<div className="modal" style={{ backgroundColor: mainBgColor, borderColor: mainBgColor, color: mainTextColor }}>
 					<h1>Update channel name</h1>
 
 					<div className="modalBody">
@@ -159,8 +171,8 @@ const Chat = () => {
 						</div>
 
 						<div className="modalAction">
-							<div className="modalButton buttonCancel" onClick={handleClose}>Cancel</div>
-							<button className="modalButton buttonSubmit" onClick={handleUpdateChannel} disabled={name == channel.name}>Change channel name</button>
+							<div className="modalButton buttonCancel" style={{ backgroundColor: mainBgColor }} onClick={handleClose}>Cancel</div>
+							<button className="modalButton buttonSubmit" style={{ backgroundColor: mainBgColor }} onClick={handleUpdateChannel} disabled={name == channel.name}>Change channel name</button>
 						</div>
 					</div>
 				</div>
@@ -171,7 +183,7 @@ const Chat = () => {
 				onClose={() => setOpenDelete(false)}
 				id="modalDeleteServer" 
 			>
-				<div className="modal">
+				<div className="modal" style={{ backgroundColor: mainBgColor, borderColor: mainBgColor, color: mainTextColor }}>
 					<h1>Delete channel ?</h1>
 
 					<div className="modalBody">
@@ -180,8 +192,8 @@ const Chat = () => {
 						</div>
 
 						<div className="modalAction">
-							<div className="modalButton buttonCancel" onClick={() => setOpenDelete(false)}>Cancel</div>
-							<button className="modalButton buttonSubmit" onClick={handleDeleteChannel} disabled={name == channel.name}>Delete</button>
+							<div className="modalButton buttonCancel" style={{ backgroundColor: mainBgColor }} onClick={() => setOpenDelete(false)}>Cancel</div>
+							<button className="modalButton buttonSubmit" style={{ backgroundColor: mainBgColor }} onClick={handleDeleteChannel} disabled={name == channel.name}>Delete</button>
 						</div>
 					</div>
 				</div>
