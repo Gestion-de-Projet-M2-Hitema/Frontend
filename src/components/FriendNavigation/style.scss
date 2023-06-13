@@ -25,4 +25,31 @@
 			}
 		}
 	}
+
+	.add-friend-button {
+		margin: 0 .8rem;
+		padding: .3rem;
+		display: flex;
+		align-items: center;
+		gap: .25rem;
+		border-radius: 4px;
+		cursor: pointer;
+		transition: background-color .3s ease-out;
+
+		svg {
+			width: 20px;
+			height: 20px;
+		}
+
+		&:hover {
+			background-color: var(--hover-color);
+		}
+	}
+}
+
+.add-friend {
+	font-family: sans-serif;
+	width: 25rem;
+	// height: 10rem;
+	padding: 1rem;
 }

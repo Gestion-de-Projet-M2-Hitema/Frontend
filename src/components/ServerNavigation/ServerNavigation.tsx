@@ -127,6 +127,21 @@ const ServerNavigation = () => {
 						)
 					})}
 				</div>
+				
+				<div className="channels">
+					<h3>Users</h3>
+					{channelList.map(e => {
+						return (
+							<div key={e.id} className={`itemChannel ${selected == 'channel-' + e.id && 'channelActive'}`}  onClick={() => {
+								setSelected("channel-" + e.id)
+								handleChannelSelection(e.id as string)
+							}}>
+								<ChannelIcon />
+								<h4>{e.name}</h4>
+							</div>
+						)
+					})}
+				</div>
 
 				<Modal
 					open={open}

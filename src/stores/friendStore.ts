@@ -20,6 +20,18 @@ export const getFriends = createAsyncThunk(
     }
 )
 
+export const addFriend = createAsyncThunk(
+    'profile/addFriend',
+    async ({id}: {id: number}) => {
+        try {
+            const response = await axios.post(import.meta.env.VITE_API_ENDPOINT + `/friends/invite`, {user: id}, {withCredentials: true})
+            return response.data
+        } catch (error: any) {
+            return console.error(error)
+        }
+    }
+)
+
 export const deleteFriends = createAsyncThunk(
     'profile/deleteFriends',
     async ({id}: {id: string}) => {
@@ -33,20 +45,80 @@ export const deleteFriends = createAsyncThunk(
     }
 )
 
+export const getUsers = createAsyncThunk(
+    'profile/getUsers',
+    async ({page = 1, limit = 1}: {page: number, limit: number}) => {
+        try {
+            const response = await axios.get(import.meta.env.VITE_API_ENDPOINT + `/users/list?page=${page}&limit=${limit}`, {withCredentials: true})
+            return response.data
+        } catch (error: any) {
+            return console.error(error)
+        }
+    }
+)
+
+export const getFriendRequest = createAsyncThunk(
+    'profile/getFriendRequest',
+    async () => {
+        try {
+            const response = await axios.get(import.meta.env.VITE_API_ENDPOINT + `/friends/list-request`, {withCredentials: true})
+            return response.data
+        } catch (error: any) {
+            return console.error(error)
+        }
+    }
+)
+
+export const acceptFriendRequest = createAsyncThunk(
+    'profile/acceptFriendRequest',
+    async ({idRequest, id}: {idRequest: string, id: string}) => {
+        try {
+            const response = await axios.post(import.meta.env.VITE_API_ENDPOINT + `/friends/accept/${idRequest}`, {}, {withCredentials: true})
+            return {idRequest, id}
+        } catch (error: any) {
+            console.error(error)
+            return {idRequest, id}
+        }
+    }
+)
+
+export const declineFriendRequest = createAsyncThunk(
+    'profile/declineFriendRequest',
+    async ({idRequest, id}: {idRequest: string, id: string}) => {
+        try {
+            const response = await axios.post(import.meta.env.VITE_API_ENDPOINT + `/friends/decline/${idRequest}`, {}, {withCredentials: true})
+            return {idRequest, id}
+        } catch (error: any) {
+            console.error(error)
+            return {idRequest, id}
+        }
+    }
+)
+
 export interface Friend {
     id: string,
     username: string,
     avatar: string,
 }
 
+export interface FriendRequest extends Friend {
+    idRequest: string,
+}
+
+export interface User extends Friend {}
+
 interface FriendState {
     status: string,
     friendList: Friend[],
+    users: User[],
+    friendRequests: FriendRequest[]
 }
 
 const initialState: FriendState = {
     status: '',
     friendList: [],
+    users: [],
+    friendRequests: []
 }
 
 export const friendSlice = createSlice({
@@ -65,6 +137,24 @@ export const friendSlice = createSlice({
             state.status = "fulfilled"
             let currentFriends = JSON.parse(JSON.stringify(state.friendList))
             state.friendList = currentFriends.filter((item: Friend) => item.id != action.payload)
+        })
+
+        builder.addCase(getUsers.fulfilled, (state, action) => {
+            state.status = "fulfilled"
+            state.users = action.payload.items
+        })
+
+        builder.addCase(getFriendRequest.fulfilled, (state, action) => {
+            state.status = "fulfilled"
+            state.friendRequests = action.payload
+        })
+
+        builder.addCase(acceptFriendRequest.fulfilled, (state, action) => {
+            state.status = "fulfilled"
+            const currentFriends = JSON.parse(JSON.stringify(state.friendRequests))
+            const friendToAdd = currentFriends.find((item: FriendRequest) => item.id == action.payload.id)
+            state.friendList.push(friendToAdd)
+            state.friendRequests = currentFriends.filter((item: FriendRequest) => item.idRequest != action.payload.idRequest)
         })
     },
 })
