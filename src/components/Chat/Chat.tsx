@@ -245,7 +245,10 @@ const Chat = () => {
 		<div className="chat-input">
 			<input type="file" name="image" id="image" accept="image/*" style={{display: "none"}} onChange={handleAddImage} ref={imageInputRef} />
 			{image && (
-				<img src={URL.createObjectURL(image)} width={100} alt="image" />
+				<>
+					<img src={URL.createObjectURL(image)} width={100} alt="image" />
+					<button onClick={() => setImage(null)}>Delete image</button>
+				</>
 			)}
 			<TextField
 				placeholder="Message"
